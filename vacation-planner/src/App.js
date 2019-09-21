@@ -1,26 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Route } from "react-router-dom";
 
+import Login from "./components/Login";
+import VacationPlan from "./components/VacationPlan";
+import Vacations from "./components/Vacations";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Vacation Planner App</h1>
+      <Route exact path="/" component={Login} />
+      <Route path="/vacation" component={Vacations}/>
+      <Route path="/vacation/:id" component={VacationPlan}/>
     </div>
   );
 }
+
 
 export default App;
