@@ -26,6 +26,9 @@ const Vacations = () => {
                     <button>Create</button>
                 </form>
             </div>
+            <div>
+                {/* map through vacations here. */}
+            </div>
         </div>
     );
 }
