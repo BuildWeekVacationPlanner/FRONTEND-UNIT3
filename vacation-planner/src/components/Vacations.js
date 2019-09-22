@@ -23,7 +23,7 @@ const Vacations = () => {
                         Add new trip
                         <input name="trip" value={newTrip.trip} onChange={e => handleChange(e)}/>
                     </label>
-                    <button>Create</button>
+                    <button>+</button>
                 </form>
             </div>
             <div>
