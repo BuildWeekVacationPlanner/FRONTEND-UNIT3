@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
     const [ newUser, setNewUser ] = useState({ username: "", password: ""});
@@ -32,6 +33,7 @@ const Signup = () => {
                 />
                 <button>Join the club!</button>
             </form>
+            <div>Already part of the Vacation-Planner community? <Link to="/login">Log in</Link></div>
         </div>
     );
 }
