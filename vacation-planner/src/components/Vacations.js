@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import VacationListCard from "./VacationListCard";
 
 const Vacations = () => {
 
-    const [newTrip, setNewTrip] = useState({title: "", location: "", dates: "", description: ""})
+    const [ newTrip, setNewTrip ] = useState({title: "", location: "", dates: "", description: ""});
+    const [ vacations, setVacations ] = useState({ vacations: []})
 
 
     /******* Get existing trips *********/
     useEffect(() => {
-        axiosWithAuth().get("/vacations/")
-            .then(res => console.log(res))
+        getTrips();
     }, [])
 
+    const getTrips = () => {
+        axiosWithAuth().get("/vacations/")
+            .then(res => {
+                setVacations({vacations: res.data});
+                console.log(vacations);
+            })
+            .catch(err => console.log(err))
+    }
 
 
     /******* Create a new trip*********/
@@ -25,6 +34,7 @@ const Vacations = () => {
         axiosWithAuth().post("/vacations/add", creds)
             .then(res => {
                 console.log("Success!");
+                getTrips();
             
             })
             .catch(err => console.log(err));
@@ -75,6 +85,7 @@ const Vacations = () => {
             </div>
             <div>
                 {/* map through vacations here. */}
+                {vacations.vacations.map(vacation => <VacationListCard vacation={vacation}/>)}
             </div>
         </div>
     );
