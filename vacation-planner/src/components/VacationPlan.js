@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+
+
 const VacationPlan = () => {
     let [ friends, setFriends ] = useState("");
     let [ places, setPlaces ] = useState("");
