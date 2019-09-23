@@ -3,6 +3,7 @@ import './App.css';
 import { Route } from "react-router-dom";
 
 import Login from "./components/Login";
+import Signup from "./components/Signup";
 import VacationPlan from "./components/VacationPlan";
 import Vacations from "./components/Vacations";
 
@@ -11,6 +12,7 @@ function App() {
     <div className="App">
       <h1>Vacation Planner App</h1>
       <Route exact path="/" component={Login} />
+      <Route exact path="/signup" component={Signup} />
       <Route path="/vacation" component={Vacations}/>
       <Route path="/myvacation" component={VacationPlan}/>
     </div>
