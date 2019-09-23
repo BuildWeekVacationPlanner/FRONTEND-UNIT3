@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const Vacations = () => {
 
-    const [newTrip, setNewTrip] = useState({title: "", location: "", date: "", description: ""})
+    const [newTrip, setNewTrip] = useState({title: "", location: "", dates: "", description: ""})
 
+
+    /******* Get existing trips *********/
+    useEffect(() => {
+        axiosWithAuth().get("/vacations/")
+            .then(res => console.log(res))
+    }, [])
+
+
+
+    /******* Create a new trip*********/
     const handleChange = e => {
         setNewTrip({...newTrip, [e.target.name]: e.target.value})
     }
@@ -13,7 +23,10 @@ const Vacations = () => {
         e.preventDefault();
         console.log(newTrip);
         axiosWithAuth().post("/vacations/add", creds)
-            .then(res => console.log("Success!"))
+            .then(res => {
+                console.log("Success!");
+            
+            })
             .catch(err => console.log(err));
 
     }
@@ -44,8 +57,8 @@ const Vacations = () => {
                         <label>
                             Got dates?
                             <input
-                                name="date"
-                                value={newTrip.date}
+                                name="dates"
+                                value={newTrip.dates}
                                 onChange={e => handleChange(e)}
                             />
                         </label>
