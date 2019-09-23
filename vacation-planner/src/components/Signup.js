@@ -1,22 +1,43 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { axiosWithAuth } from "../utils/axiosWithAuth";
+
 const Signup = () => {
+
+    //state
     const [ newUser, setNewUser ] = useState({ username: "", password: ""});
+
+
+    //new user info
 
     const handleNewUser = event => {
         setNewUser({...newUser, [event.target.name]: event.target.value})
     }
 
-    const submitInfo = event => {
+    const submitInfo = (event, props, creds) => {
         event.preventDefault();
         console.log(newUser);
+        axiosWithAuth().post("/auth/register", creds)
+            .then(res => {
+                console.log("It worked!!!");
+                props.history.push("/");
+            
+            })
+            .catch(err => console.log(err));
+
     }
+
+    
+
+
+
+    //output
 
     return (
         <div>
             Sign up!
-            <form onSubmit={submitInfo}>
+            <form onSubmit={(e, props) => submitInfo(e, props, newUser)}>
                 <label>username</label>
                 <input 
                     type="text" 
