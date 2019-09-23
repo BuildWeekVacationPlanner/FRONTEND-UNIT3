@@ -1,33 +1,55 @@
 import React, { useState } from "react";
 
 const VacationPlan = () => {
-    let [ friends, setFriends ] = useState({friends: []});
-    let [ places, setPlaces ] = useState({places: []});
-    let [ toDos, setToDos ] = useState({});
+    let [ friends, setFriends ] = useState("");
+    let [ places, setPlaces ] = useState("");
+    let [ toDos, setToDos ] = useState("");
     let [ message, setMessage ] = useState({ username: "", topic: "", message: ""});
-    let [ messageList, setMessageList ] = useState({messages: []})
+
+    //friends and family handlers
 
     const handleFriends = e => {
-        setFriends({friends: [...friends, e.target.value]})
+        setFriends(`${e.target.value}`)
     }
+
+    const submitFriends = e => {
+        e.preventDefault();
+        console.log("submit", friends)
+    }
+
+    //places handlers
 
     const handlePlaces = e => {
-        setPlaces({places: [...places, e.target.value] })
+        setPlaces(`${e.target.value}`)
     }
+
+    const submitPlaces = e => {
+        e.preventDefault();
+        console.log("place", places)
+    }
+
+
+    //toDo handlers
 
     const handleToDos = e => {
-        setToDos({todos: [...toDos, e.target.value]})
+        setToDos(`${e.target.value}`);
     }
 
+    const submitToDos = e => {
+        e.preventDefault();
+        console.log("successful todo submission", toDos);
+    }
+
+
+    //message handlers
     const handleMessages = e => {
         setMessage({...message, [e.target.name]: e.target.value});
-        console.log("message", message);
     }
+
 
     const submitMessages = (e) => {
         e.preventDefault();
-        setMessageList({messages: [message]});
-        console.log("You clicked submit", messageList);
+        console.log("Hi!", message);
     }
 
     
@@ -36,7 +58,7 @@ const VacationPlan = () => {
         <h2>Plan your vacation! Bring along friends!</h2>
         <div>
             <h3>Add friends and family to your trip</h3>
-            <form>
+            <form onSubmit={submitFriends}>
                 <input 
                     value={friends.friends} 
                     name="friends" 
@@ -45,7 +67,7 @@ const VacationPlan = () => {
                 <button>+</button>
             </form>
         </div>
-        <form>
+        <form onSubmit={submitPlaces}>
             <label>Places to go</label>
             <input 
                 value={places.places}
@@ -55,7 +77,7 @@ const VacationPlan = () => {
              />
             <button>+</button>
         </form>
-        <form>
+        <form onSubmit={submitToDos}>
             <label>Stuff to do</label>
             <input  
                 value={toDos.todos}
