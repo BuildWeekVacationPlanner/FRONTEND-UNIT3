@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
-const Signup = () => {
+const Signup = props => {
 
     //state
     const [ newUser, setNewUser ] = useState({ username: "", password: ""});
@@ -15,7 +15,7 @@ const Signup = () => {
         setNewUser({...newUser, [event.target.name]: event.target.value})
     }
 
-    const submitInfo = (event, props, creds) => {
+    const submitInfo = (event, creds) => {
         event.preventDefault();
         console.log(newUser);
         axiosWithAuth().post("/auth/register", creds)
@@ -37,7 +37,7 @@ const Signup = () => {
     return (
         <div>
             Sign up!
-            <form onSubmit={(e, props) => submitInfo(e, props, newUser)}>
+            <form onSubmit={(e) => submitInfo(e, newUser)}>
                 <label>username</label>
                 <input 
                     type="text" 
