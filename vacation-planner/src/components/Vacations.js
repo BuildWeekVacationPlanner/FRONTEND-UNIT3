@@ -2,24 +2,13 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import VacationListCard from "./VacationListCard";
-import { getTrips } from "../actions/index";
+import { getTrips, addNewTrip } from "../actions/index";
 
 
-const Vacations = ({ getTrips }) => {
+const Vacations = ({ vacations, getTrips, addNewTrip }) => {
 
     const [ newTrip, setNewTrip ] = useState({title: "", location: "", dates: "", description: ""});
-    // const [ vacations, setVacations ] = useState({ vacations: []})
 
-
-    /******* Get existing trips *********/
-    // const getTrips = () => {
-    //     axiosWithAuth().get("/vacations/")
-    //         .then(res => {
-    //             setVacations({vacations: res.data});
-    //             console.log(vacations);
-    //         })
-    //         .catch(err => console.log(err))
-    // }
     
     useEffect(() => {
         getTrips();
@@ -33,15 +22,16 @@ const Vacations = ({ getTrips }) => {
         setNewTrip({...newTrip, [e.target.name]: e.target.value})
     }
 
-    const handleSubmit = (e, creds) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         console.log(newTrip);
-        axiosWithAuth().post("/vacations/add", creds)
-            .then(res => {
-                getTrips();
+        addNewTrip(newTrip);
+        // axiosWithAuth().post("/vacations/add", creds)
+        //     .then(res => {
+        //         getTrips();
             
-            })
-            .catch(err => console.log(err));
+        //     })
+        //     .catch(err => console.log(err));
 
     }
 
@@ -92,7 +82,7 @@ const Vacations = ({ getTrips }) => {
             </div>
             <div>
                 {/* map through vacations here. */}
-                {/* {vacations.vacations.map(vacation => <VacationListCard key={vacation.id} vacation={vacation}/>)} */}
+                {vacations.map(vacation => <VacationListCard key={vacation.id} vacation={vacation}/>)}
             </div>
         </div>
     );
@@ -103,5 +93,5 @@ const mapStateToProps = state => {
         vacations: state.vacations
     }
 }
-export default connect(mapStateToProps, {getTrips})(Vacations);
+export default connect(mapStateToProps, {getTrips, addNewTrip})(Vacations);
 

@@ -1,5 +1,8 @@
 import { GET_TRIPS_START, GET_TRIPS_SUCCESS,
 GET_TRIPS_FAILURE } from "../actions";
+import {ADD_TRIP_START, ADD_TRIP_SUCCESS, ADD_TRIP_FAILURE} from "../actions";
+
+
 
 const initialState = {
     vacations: [],
@@ -24,6 +27,25 @@ export const reducer = (state=initialState, action) => {
             return {
                 isFetching: false,
                 error: ""
+            }
+        case ADD_TRIP_START: 
+            return {
+                ...state,
+                isFetching: false,
+                error: ""
+            }
+        case ADD_TRIP_SUCCESS:
+            return {
+                ...state,
+                vacations: [...state.vacations, action.payload],
+                isFetching: false,
+                error: ""
+            }
+        case ADD_TRIP_FAILURE:
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload
             }
         default:
             return state;
