@@ -14,6 +14,12 @@ export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";
 
 
 /***add new trip ***/
+export const ADD_TRIP_START = "ADD_TRIP_START";
+export const ADD_TRIP_SUCCESS = "ADD_TRIP_SUCCESS";
+export const ADD_TRIP_FAILURE = "ADD_TRIP_FAILURE";
 
 /***retrieve trips***/
 
+export const GET_TRIPS_START = "GET_TRIPS_START";
+export const GET_TRIPS_SUCCESS = "GET_TRIPS_SUCCESS";
+export const GET_TRIPS_FAILURE = "GET_TRIPS_FAILURE";
