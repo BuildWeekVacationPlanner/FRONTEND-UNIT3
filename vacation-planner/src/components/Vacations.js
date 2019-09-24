@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 import VacationListCard from "./VacationListCard";
+import { getTrips } from "../actions/index";
 
-const Vacations = () => {
+
+const Vacations = ({ getTrips }) => {
 
     const [ newTrip, setNewTrip ] = useState({title: "", location: "", dates: "", description: ""});
-    const [ vacations, setVacations ] = useState({ vacations: []})
+    // const [ vacations, setVacations ] = useState({ vacations: []})
 
 
     /******* Get existing trips *********/
-    const getTrips = () => {
-        axiosWithAuth().get("/vacations/")
-            .then(res => {
-                setVacations({vacations: res.data});
-                console.log(vacations);
-            })
-            .catch(err => console.log(err))
-    }
+    // const getTrips = () => {
+    //     axiosWithAuth().get("/vacations/")
+    //         .then(res => {
+    //             setVacations({vacations: res.data});
+    //             console.log(vacations);
+    //         })
+    //         .catch(err => console.log(err))
+    // }
     
     useEffect(() => {
         getTrips();
-    }, [getTrips])
+    }, [])
 
 
 
@@ -35,7 +38,6 @@ const Vacations = () => {
         console.log(newTrip);
         axiosWithAuth().post("/vacations/add", creds)
             .then(res => {
-                console.log("Success!");
                 getTrips();
             
             })
@@ -90,10 +92,16 @@ const Vacations = () => {
             </div>
             <div>
                 {/* map through vacations here. */}
-                {vacations.vacations.map(vacation => <VacationListCard vacation={vacation}/>)}
+                {/* {vacations.vacations.map(vacation => <VacationListCard key={vacation.id} vacation={vacation}/>)} */}
             </div>
         </div>
     );
 }
 
-export default Vacations;
+const mapStateToProps = state => {
+    return {
+        vacations: state.vacations
+    }
+}
+export default connect(mapStateToProps, {getTrips})(Vacations);
+
