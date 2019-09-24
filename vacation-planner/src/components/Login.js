@@ -1,56 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./Login.css";
 import Styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-
-const StyledForm = Styled.form`
-
-width: 300px;
-	margin: 0 auto;
-	position: relative;
-	
-	background: #f3f3f3;
-	border: 1px solid #fff;
-	border-radius: 5px;
-	
-	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-`;
+import { Formik, withFormik, Form, Field, ErrorMessage } from "formik";
+import * as yup from "yup";
 
 const StyledDiv = Styled.div`
 padding: 0 30px 25px 30px;
 
 `;
 
-const StyledInput = Styled.input`
-width: 188px;
-padding: 15px 25px;font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-font-weight: 400;
-font-size: 14px;
-color: #9d9e9e;
-text-shadow: 1px 1px 0 rgba(256,256,256,1.0);
-background: #fff;
-border: 1px solid #fff;
-border-radius: 5px;
-box-shadow: inset 0 1px 3px rgba(0,0,0,0.50);
--moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.50);
--webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.50);
+const Div = Styled.div`
 margin-top:25px
-
-&:hover {
-    background: #dfe9ec;
-    color: #414848;
-}
-
-&:focus{
-    background: #dfe9ec;
-    color: #414848;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
-	-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
-	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
-}
 
 `;
 
@@ -72,59 +34,73 @@ const longInForm = {
   password: ""
 };
 
-const Login = actions => {
+const validationSchema = yup.object().shape({
+  email: yup.string().required("Email is a required field"),
+  password: yup.string().required("password is a required field")
+});
+
+const Login = () => {
   const [userForm, setUserForm] = useState(longInForm);
 
-  const onNameChange = e => {
-    const { name, value } = e.target;
-
-    setUserForm(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const login = e => {
-    e.preventDefault();
-    axios
-      .get("https://reqres.in/api/users", userForm)
-      .then(res => {})
-      .catch(err => {
-        return err.message;
-      });
+  const onSubmit = formValues => {
+    const memberToOnBoard = {
+      email: formValues.email,
+      password: formValues.password
+    };
+    setUserForm(memberToOnBoard);
   };
 
   return (
     <Formik
-      initialValues={userForm}
-      onSubmit={login}
+      validationSchema={validationSchema}
+      initialValues={longInForm}
+      onSubmit={onSubmit}
       render={props => {
         return (
           <div>
-            <StyledForm>
-              <h2>Login page</h2>
+            <Form className="form">
+              <h2>Enter your login details</h2>
+
               <StyledDiv clasName="content">
-                <StyledInput
-                  className="input"
-                  type="text"
-                  name="email"
-                  value={userForm.email}
-                  onChange={onNameChange}
-                  placeholder="example@email.com"
-                />
-                <StyledInput
-                  className="input"
-                  type="password"
-                  name="password"
-                  value={userForm.password}
-                  onChange={onNameChange}
-                  placeholder="Enter password"
-                />
-                <StyledButton onClick={login}>Login</StyledButton>
-                <p>Don't ahve an account? </p>
-                <Link to="/"> Signup here</Link>
+                <Div>
+                  <label htmlFor="email">Email</label>
+                  <Field
+                    className="field"
+                    name="email"
+                    id="email"
+                    type="email"
+                    placeholder="email@example.com"
+                  />
+                  <ErrorMessage
+                    style={{ color: "red" }}
+                    name="email"
+                    component="div"
+                  />
+                </Div>
+
+                <Div>
+                  <label htmlFor="password">Password</label>
+                  <Field
+                    className="field"
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="Enter password"
+                  />
+                  <ErrorMessage
+                    style={{ color: "red" }}
+                    name="password"
+                    component="div"
+                  />
+                </Div>
+                <StyledButton type="submit">Login</StyledButton>
+                <div className="redirect-signup">
+                  <p>
+                    Don't have an account? <Link to="/"> Signup here</Link>
+                  </p>
+                </div>
               </StyledDiv>
-            </StyledForm>
+            </Form>
           </div>
         );
       }}
