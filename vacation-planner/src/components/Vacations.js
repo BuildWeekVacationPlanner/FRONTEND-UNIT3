@@ -15,7 +15,6 @@ const Vacations = ({ vacations, getTrips, addNewTrip }) => {
 
 
 
-
     /******* Create a new trip*********/
     const handleChange = e => {
         setNewTrip({...newTrip, [e.target.name]: e.target.value})
@@ -74,13 +73,14 @@ const Vacations = ({ vacations, getTrips, addNewTrip }) => {
                 </form>
             </div>
             <div>
-                {vacations.map(vacation => <VacationListCard key={vacation.id} vacation={vacation}/>)}
+                {vacations.map(vacation => <VacationListCard key={vacation.vacation_id} vacation={vacation}/>)}
             </div>
         </div>
     );
 }
 
 const mapStateToProps = state => {
+    console.log("mstp", state.vacations);
     return {
         vacations: state.vacations
     }

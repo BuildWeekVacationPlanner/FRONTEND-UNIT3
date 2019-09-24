@@ -1,18 +1,4 @@
-import axios from "axios";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
-
-
-// /*** sign in new user ***/
-// export const ADD_USER_START = "ADD_USER_START";
-// export const ADD_USER_SUCCESS = "ADD_USER_SUCCESS";
-// export const ADD_USER_FAILURE = "ADD_USER_FAILURE";
-
-
-
-// /*** log in user ***/
-// export const LOGIN_USER_START = "LOGIN_USER_START";
-// export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
-// export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";
 
 
 /***retrieve trips***/
@@ -26,7 +12,7 @@ export const getTrips = () => dispatch => {
     axiosWithAuth().get("/vacations/")
         .then(res => {
             dispatch({ type: GET_TRIPS_SUCCESS, payload: res.data});
-            console.log(res.data)
+            console.log(res.data);
         })
         .catch(err => {
             dispatch({type: GET_TRIPS_FAILURE, paylaod: `${err}`})
@@ -55,4 +41,23 @@ export const addNewTrip = creds => dispatch => {
         });
 
 }
+
+/******get trip by id**********/
+
+export const FIND_TRIP_BY_ID_START ="FIND_TRIP_BY_ID_START";
+export const FIND_TRIP_BY_ID_SUCCESS = "FIND_TRIP_BY_ID_SUCCESS";
+export const FIND_TRIP_BY_ID_FAILURE = "FIND_TRIP_BY_ID_FAILURE";
+
+export const findTrip = (id) => dispatch => {
+    dispatch({ type: FIND_TRIP_BY_ID_START })
+    axiosWithAuth().get(`/vacations/${id}`)
+        .then(res => {
+            dispatch({ type: FIND_TRIP_BY_ID_SUCCESS, payload: res.data});
+            console.log("trip found", res.data);
+        })
+        .catch(err => {
+            dispatch({type: FIND_TRIP_BY_ID_FAILURE, paylaod: `${err}`})
+            console.log(err);
+        })
+    }
 

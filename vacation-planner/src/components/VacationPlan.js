@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { findTrip } from "../actions/index"; 
 
 
 
-const VacationPlan = () => {
+const VacationPlan = ({trip, match, findTrip}) => {
     let [ friends, setFriends ] = useState("");
     let [ places, setPlaces ] = useState("");
     let [ toDos, setToDos ] = useState("");
     let [ message, setMessage ] = useState({ username: "", topic: "", message: ""});
 
+    // find information for this vacation
+
+    useEffect(() => {
+        findTrip(match.params.id);
+    }, [])
+   
+ 
     //friends and family handlers
 
     const handleFriends = e => {
@@ -57,7 +66,7 @@ const VacationPlan = () => {
     
     return (
         <div>
-        <h2>Plan your vacation! Bring along friends!</h2>
+        <h2>{trip.title}</h2>
         <div>
             <h3>Add friends and family to your trip</h3>
             <form onSubmit={submitFriends}>
@@ -120,4 +129,15 @@ const VacationPlan = () => {
     );
 }
 
-export default VacationPlan;
+const mapStateToProps = state => {
+    console.log("from state", state.vacations);
+    return {
+        vacations: state.vacations,
+        trip: state.mytrip
+    }
+}
+
+
+export default connect(mapStateToProps, {findTrip})(VacationPlan);
+
+// export default VacationPlan;

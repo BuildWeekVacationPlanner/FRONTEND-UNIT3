@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const VacationListCard = props => {
     return (
@@ -8,8 +9,11 @@ const VacationListCard = props => {
             <p><strong>Destination: </strong>{props.vacation.location}</p>
             <p><strong>Description: </strong>{props.vacation.description}</p>
             <button>Delete</button>
+            <Link to={`/vacation/${props.vacation.vacation_id}`}>Details</Link>
         </div>
     );
 }
+
+
 
 export default VacationListCard;

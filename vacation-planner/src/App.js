@@ -14,8 +14,9 @@ function App() {
       <h1>Vacation Planner App</h1>
       <Route exact path="/" component={Login} />
       <Route exact path="/signup" component={Signup} />
-      <PrivateRoute path="/vacation" component={Vacations}/>
-      <PrivateRoute path="/myvacation" component={VacationPlan}/>
+      <PrivateRoute exact path="/vacation" component={Vacations}/>
+      {/* <Route exact path="/vacation/:id" render={props => <VacationPlan {...props} />} /> */}
+      <PrivateRoute exact path={`/vacation/:id`} component={VacationPlan} />
     </div>
   );
 }
