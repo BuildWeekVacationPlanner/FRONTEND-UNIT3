@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { axiosWithAuth } from "../utils/axiosWithAuth";
 import VacationListCard from "./VacationListCard";
 import { getTrips, addNewTrip } from "../actions/index";
 
@@ -22,17 +21,11 @@ const Vacations = ({ vacations, getTrips, addNewTrip }) => {
         setNewTrip({...newTrip, [e.target.name]: e.target.value})
     }
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(newTrip);
         addNewTrip(newTrip);
-        // axiosWithAuth().post("/vacations/add", creds)
-        //     .then(res => {
-        //         getTrips();
-            
-        //     })
-        //     .catch(err => console.log(err));
-
+        setNewTrip({title: "", location: "", dates: "", description: ""});
     }
 
 
@@ -81,7 +74,6 @@ const Vacations = ({ vacations, getTrips, addNewTrip }) => {
                 </form>
             </div>
             <div>
-                {/* map through vacations here. */}
                 {vacations.map(vacation => <VacationListCard key={vacation.id} vacation={vacation}/>)}
             </div>
         </div>
