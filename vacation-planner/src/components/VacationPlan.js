@@ -1,31 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment } from "../actions/index"; 
 
 
 
-const VacationPlan = ({trip, match, findTrip}) => {
-    let [ friends, setFriends ] = useState("");
+const VacationPlan = ({trip, match, findTrip, addPlace, addComment, addUserToTrip}) => {
+    let [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState("");
     let [ toDos, setToDos ] = useState("");
     let [ message, setMessage ] = useState({ username: "", topic: "", message: ""});
 
+    const id = match.params.id;
+
     // find information for this vacation
 
     useEffect(() => {
-        findTrip(match.params.id);
+        findTrip(id);
     }, [])
    
  
     //friends and family handlers
 
     const handleFriends = e => {
-        setFriends(`${e.target.value}`)
+        setFriends(`username: ${e.target.value}`)
     }
 
     const submitFriends = e => {
         e.preventDefault();
-        console.log("submit", friends)
+        console.log("submit", friends);
+        addUserToTrip(friends, id);
     }
 
     //places handlers
@@ -36,7 +39,9 @@ const VacationPlan = ({trip, match, findTrip}) => {
 
     const submitPlaces = e => {
         e.preventDefault();
-        console.log("place", places)
+        addPlace(id, places);
+        console.log("place", places);
+
     }
 
 
@@ -61,6 +66,8 @@ const VacationPlan = ({trip, match, findTrip}) => {
     const submitMessages = (e) => {
         e.preventDefault();
         console.log("Hi!", message);
+        addComment(id, message);
+    
     }
 
     
@@ -72,22 +79,27 @@ const VacationPlan = ({trip, match, findTrip}) => {
             <form onSubmit={submitFriends}>
                 <input 
                     value={friends.friends} 
-                    name="friends" 
+                    name="username" 
                     placeholder="add friends and family" 
                     onChange={(e) => handleFriends(e)}/>
                 <button>+</button>
+                <h4>Friends</h4>
+                <ul>
+                    <li>{trip.users}</li>
+                </ul>
             </form>
         </div>
         <form onSubmit={submitPlaces}>
             <label>Places to go</label>
             <input 
-                value={places.places}
+                value={places}
                 name="places"
                 placeholder="Where will you go?"
                 onChange={(e) => handlePlaces(e)}
              />
             <button>+</button>
         </form>
+        <h4>Places to go...</h4>
         <form onSubmit={submitToDos}>
             <label>Stuff to do</label>
             <input  
@@ -130,7 +142,7 @@ const VacationPlan = ({trip, match, findTrip}) => {
 }
 
 const mapStateToProps = state => {
-    console.log("from state", state.vacations);
+    console.log(state.mytrip.users);
     return {
         vacations: state.vacations,
         trip: state.mytrip
@@ -138,6 +150,6 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, {findTrip})(VacationPlan);
+export default connect(mapStateToProps, {findTrip, addUserToTrip, addComment, addPlace})(VacationPlan);
 
 // export default VacationPlan;

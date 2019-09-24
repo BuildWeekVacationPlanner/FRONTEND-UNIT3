@@ -60,4 +60,68 @@ export const findTrip = (id) => dispatch => {
             console.log(err);
         })
     }
+/***add another user to trip*******/
+export const ADD_USER_START = "ADD_USER_START";
+export const ADD_USER_SUCCESS = "ADD_USER_SUCCESS";
+export const ADD_USER_FAILURE = "ADD_USER_FAILURE";
 
+
+
+export const addUserToTrip = (name, id) => dispatch => {
+    console.log("creds", {users: name});
+    console.log("id", id);
+    dispatch({ type: ADD_USER_START});
+    axiosWithAuth().post(`/vacations/${id}/addUser`, name)
+        .then(res => {
+            console.log("res from post", res);
+            dispatch({ type: ADD_USER_SUCCESS, payload: name})
+        })
+        .catch(err => {
+            console.log(err);
+            // ({ type: ADD_USER_FAILURE, payload: `${err}`})
+        });
+}
+
+/********add a place**********/
+
+export const ADD_PLACE_START = "ADD_PLACE_START";
+export const ADD_PLACE_SUCCESS = "ADD_PLACE_SUCCESS";
+export const ADD_PLACE_FAILURE = "ADD_PLACE_FAILURE";
+
+
+
+export const addPlace = (id, creds) => dispatch => {
+    // dispatch({ type: ADD_PLACE_START});
+    axiosWithAuth().post(`/vacations/${id}/suggestions`, creds)
+        .then(res => {
+            console.log("New place added!");
+            // dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
+        })
+        .catch(err => {
+            console.log(err);
+            // dispatch({ type: ADD_PLACE_FAILURE, payload: `${err}`})
+        });
+
+}
+
+/***********add comment*************/
+
+export const ADD_COMMENT_START = "ADD_COMMENT_START";
+export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
+export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
+
+
+
+export const addComment = (id, creds) => dispatch => {
+    // dispatch({ type: ADD_PLACE_START});
+    axiosWithAuth().post(`/vacations/${id}/comments/add`, creds)
+        .then(res => {
+            console.log("New place added!");
+            // dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
+        })
+        .catch(err => {
+            console.log(err);
+            // dispatch({ type: ADD_PLACE_FAILURE, payload: `${err}`})
+        });
+
+}
