@@ -9,10 +9,6 @@ const Vacations = () => {
 
 
     /******* Get existing trips *********/
-    useEffect(() => {
-        getTrips();
-    }, [])
-
     const getTrips = () => {
         axiosWithAuth().get("/vacations/")
             .then(res => {
@@ -21,6 +17,12 @@ const Vacations = () => {
             })
             .catch(err => console.log(err))
     }
+    
+    useEffect(() => {
+        getTrips();
+    }, [getTrips])
+
+
 
 
     /******* Create a new trip*********/
@@ -40,6 +42,9 @@ const Vacations = () => {
             .catch(err => console.log(err));
 
     }
+
+
+    /***********What you see***********/
 
     return (
         <div>
