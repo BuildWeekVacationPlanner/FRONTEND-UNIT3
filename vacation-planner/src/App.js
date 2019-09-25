@@ -1,5 +1,5 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 import { Route } from "react-router-dom";
 
 import Login from "./components/Login";
@@ -12,14 +12,13 @@ function App() {
   return (
     <div className="App">
       <h1>Vacation Planner App</h1>
-      <Route exact path="/" component={Login} />
+      <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
       <PrivateRoute exact path="/vacation" component={Vacations}/>
-      {/* <Route exact path="/vacation/:id" render={props => <VacationPlan {...props} />} /> */}
       <PrivateRoute exact path={`/vacation/:id`} component={VacationPlan} />
+
     </div>
   );
 }
-
 
 export default App;
