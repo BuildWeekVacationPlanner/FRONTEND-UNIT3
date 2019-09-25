@@ -144,15 +144,15 @@ export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
 
 
 export const addComment = (id, comment) => dispatch => {
-    // dispatch({ type: ADD_PLACE_START});
+    dispatch({ type: ADD_COMMENT_START});
     axiosWithAuth().post(`/vacations/${id}/comments/add`, comment)
         .then(res => {
             console.log("New place added!");
-            // dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
+            dispatch({ type: ADD_COMMENT_SUCCESS, payload: comment})
         })
         .catch(err => {
             console.log(err);
-            // dispatch({ type: ADD_PLACE_FAILURE, payload: `${err}`})
+            dispatch({ type: ADD_COMMENT_FAILURE, payload: `${err}`})
         });
 
 }
