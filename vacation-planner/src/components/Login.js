@@ -1,7 +1,8 @@
 
 import React, { useState} from "react";
 import "./Login.css";
-import Styled from "styled-components";
+// import Styled from "styled-components";
+import axios from "axios";
 
 const Login = props => {
 
@@ -42,6 +43,8 @@ const Login = props => {
         </div>
     );
 }
+
+export default Login;
 
 //Reconcile everything below this line
 

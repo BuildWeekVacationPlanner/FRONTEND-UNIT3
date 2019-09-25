@@ -67,18 +67,34 @@ export const ADD_USER_FAILURE = "ADD_USER_FAILURE";
 
 
 
+// export const addUserToTrip = (name, id) => dispatch => {
+//     console.log("creds", {users: name});
+//     console.log("id", id);
+//     dispatch({ type: ADD_USER_START});
+//     axiosWithAuth().post(`/vacations/${id}/addUser`, name)
+//         .then(res => {
+//             console.log("res from post", res);
+//             dispatch({ type: ADD_USER_SUCCESS, payload: name})
+//         })
+//         .catch(err => {
+//             console.log(err);
+//             // ({ type: ADD_USER_FAILURE, payload: `${err}`})
+//         });
+// }
 export const addUserToTrip = (name, id) => dispatch => {
     console.log("creds", {users: name});
     console.log("id", id);
     dispatch({ type: ADD_USER_START});
     axiosWithAuth().post(`/vacations/${id}/addUser`, name)
         .then(res => {
-            console.log("res from post", res);
-            dispatch({ type: ADD_USER_SUCCESS, payload: name})
+            if(res.status === 201) {
+                dispatch({ type: ADD_USER_SUCCESS, payload: name.username})
+            }  
         })
         .catch(err => {
-            console.log(err);
-            // ({ type: ADD_USER_FAILURE, payload: `${err}`})
+            if(err){
+                dispatch({type: ADD_USER_FAILURE, payload: 'This username does not exist' })
+            }
         });
 }
 
@@ -112,9 +128,9 @@ export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
 
 
 
-export const addComment = (id, creds) => dispatch => {
+export const addComment = (id, comment) => dispatch => {
     // dispatch({ type: ADD_PLACE_START});
-    axiosWithAuth().post(`/vacations/${id}/comments/add`, creds)
+    axiosWithAuth().post(`/vacations/${id}/comments/add`, comment)
         .then(res => {
             console.log("New place added!");
             // dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})

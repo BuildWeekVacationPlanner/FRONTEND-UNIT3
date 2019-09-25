@@ -4,7 +4,7 @@ import { findTrip, addUserToTrip, addPlace, addComment } from "../actions/index"
 
 
 
-const VacationPlan = ({trip, match, findTrip, addPlace, addComment, addUserToTrip}) => {
+const VacationPlan = ({trip, match, findTrip, addPlace, badrequest, addComment, addUserToTrip}) => {
     let [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState("");
     let [ toDos, setToDos ] = useState("");
@@ -70,11 +70,12 @@ const VacationPlan = ({trip, match, findTrip, addPlace, addComment, addUserToTri
     
     }
 
+
     
     return (
         <div>
         <h2>{trip.title}</h2>
-        <div>
+        {/* <div>
             <h3>Add friends and family to your trip</h3>
             <form onSubmit={submitFriends}>
                 <input 
@@ -86,6 +87,28 @@ const VacationPlan = ({trip, match, findTrip, addPlace, addComment, addUserToTri
                 <h4>Friends</h4>
                 <ul>
                     <li>{trip.users}</li>
+                </ul>
+            </form>
+        </div> */}
+          <div>
+            <h3>Add friends and family to your trip</h3>
+            <form onSubmit={submitFriends}>
+                <input 
+                    value={friends.friends} 
+                    name="username" 
+                    placeholder="add friends and family" 
+                    onChange={(e) => handleFriends(e)}/>
+                <button>+</button>
+                <h4>Friends</h4>
+                <ul>
+                {!badrequest ? (
+                    trip.users && trip.users.map( user => {
+                        return <li>{user}</li>
+                    })
+                ) : (
+                    <h5>{badrequest}</h5>
+                )}
+                
                 </ul>
             </form>
         </div>
@@ -145,7 +168,8 @@ const mapStateToProps = state => {
     console.log(state.mytrip.users);
     return {
         vacations: state.vacations,
-        trip: state.mytrip
+        trip: state.mytrip,
+        badrequest: state.error
     }
 }
 

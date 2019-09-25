@@ -5,9 +5,17 @@ import {FIND_TRIP_BY_ID_START, FIND_TRIP_BY_ID_SUCCESS, FIND_TRIP_BY_ID_FAILURE}
 import { ADD_USER_START, ADD_USER_SUCCESS, ADD_USER_FAILURE } from "../actions";
 import { ADD_PLACE_START } from "../actions";
 
+// const initialState = {
+//     vacations: [],
+//     mytrip: {},
+//     isFetching: false,
+//     error: ""
+// }
 const initialState = {
     vacations: [],
-    mytrip: {},
+    mytrip: {
+        users:[],
+    },
     isFetching: false,
     error: ""
 }
@@ -73,14 +81,25 @@ export const reducer = (state=initialState, action) => {
             return {
                 ...state
             }
+        // case ADD_USER_SUCCESS:
+        //     return {
+        //         ...state,
+        //         mytrip: {...state.mytrip, users: action.payload}
+        //     } 
         case ADD_USER_SUCCESS:
             return {
                 ...state,
-                mytrip: {...state.mytrip, users: action.payload}
+                mytrip: {...state.mytrip,
+                    users: [...state.mytrip.users, action.payload]}
             } 
+        // case ADD_USER_FAILURE:
+        //     return {
+
+        //     }
         case ADD_USER_FAILURE:
             return {
-
+                ...state,
+                error: action.payload
             }
         case ADD_PLACE_START:
             return {
