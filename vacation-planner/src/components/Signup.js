@@ -9,21 +9,6 @@ import "./Login.css";
 
 
 
-
-
-
-
-// const StyledDiv = Styled.div`
-// 
-// `;
-
-
-
-
-    
-
-
-
 const Signup = props => {
   //state
   const [newUser, setNewUser] = useState({ username: "", password: ""})
@@ -38,27 +23,10 @@ const Signup = props => {
         .catch(err => console.log(err));
       }
 
-  // const { FirstName, LastName, email, password } = newUser;
-
-  // const isDisabled = () => {
-  //   if (!FirstName || !LastName || !email || !password) {
-  //     return true;
-  //   }
-  // };
   const handleNewUser = event => {
     setNewUser({ ...newUser, [event.target.name]: event.target.value });
   };
 
-  // const submitInfo = (event, creds) => {
-  //   event.preventDefault();
-
-  //   axiosWithAuth()
-  //     .post("/auth/register", creds)
-  //     .then(res => {
-  //       props.history.push("/");
-  //     })
-  //     .catch(err => console.log(err));
-  // };
 
 
     return (
@@ -66,14 +34,14 @@ const Signup = props => {
             
             <StyledForm onSubmit={(e) => submitInfo(e, newUser)}>
                 <StyledH3>Sign up!</StyledH3>
-                    <label>username</label>
+                    <Label>username</Label>
                     <StyledInput
                         type="text" 
                         value={newUser.username}
                         name="username"
                         onChange={handleNewUser}
                     />
-                    <label>password</label>
+                    <Label>password</Label>
                     <StyledInput 
                         type="text" 
                         value={newUser.password}
@@ -88,71 +56,6 @@ const Signup = props => {
 }
 
 
-
-//   //new user info
-
-
-//   //output
-
-//   return (
-//     <div>
-//       <StyledForm onSubmit={e => submitInfo(e, newUser)}>
-//         <StyledDiv>
-//           <StyledH3>Please sign up to get started</StyledH3>
-//           <Div>
-//             <label htmlFor="FirstName">First Name</label>
-//             <StyledInput
-//               type="text"
-//               value={newUser.username}
-//               name="FirstName"
-//               id="FirstName"
-//               onChange={handleNewUser}
-//             />
-//           </Div>
-
-//           <Div>
-//             <label htmlFor="LastName">Last Name</label>
-//             <StyledInput
-//               type="text"
-//               id="LastName"
-//               value={newUser.username}
-//               name="LastName"
-//               onChange={handleNewUser}
-//             />
-//           </Div>
-
-//           <Div>
-//             <label htmlFor="email">Email</label>
-//             <StyledInput
-//               type="email"
-//               value={newUser.username}
-//               name="email"
-//               id="email"
-//               onChange={handleNewUser}
-//             />
-//           </Div>
-
-//           <Div>
-//             <label htmlFor="password">password</label>
-//             <StyledInput
-//               type="password"
-//               id="password"
-//               value={newUser.password}
-//               name="password"
-//               onChange={handleNewUser}
-//             />
-//           </Div>
-//           <StyledButton disabled={isDisabled()}>Join the club!</StyledButton>
-
-//           <StyledParagraph>
-//             Already part of the Vacation-Planner community?
-//             <Link to="/login">Log in</Link>
-//           </StyledParagraph>
-//         </StyledDiv>
-//       </StyledForm>
-//     </div>
-//   );
-// };
 
 
 export default Signup;
@@ -176,7 +79,9 @@ const StyledForm = Styled.form`
   flex-direction: column;
   justify-content: center;
 `;
-
+const Label = Styled.label`
+    text-align: center;
+`
 const StyledInput = Styled.input`
 width: 188px;
 padding: 10px 25px;
@@ -205,6 +110,7 @@ border-color: transparent;
 color: #fff;
 cursor: pointer;
 width: 80%
+margin: 0 auto;
 margin-top:25px;
 font-weight:bold;
 font-size:14px;
