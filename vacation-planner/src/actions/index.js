@@ -66,21 +66,6 @@ export const ADD_USER_SUCCESS = "ADD_USER_SUCCESS";
 export const ADD_USER_FAILURE = "ADD_USER_FAILURE";
 
 
-
-// export const addUserToTrip = (name, id) => dispatch => {
-//     console.log("creds", {users: name});
-//     console.log("id", id);
-//     dispatch({ type: ADD_USER_START});
-//     axiosWithAuth().post(`/vacations/${id}/addUser`, name)
-//         .then(res => {
-//             console.log("res from post", res);
-//             dispatch({ type: ADD_USER_SUCCESS, payload: name})
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             // ({ type: ADD_USER_FAILURE, payload: `${err}`})
-//         });
-// }
 export const addUserToTrip = (name, id) => dispatch => {
     console.log("creds", {users: name});
     console.log("id", id);
@@ -98,6 +83,18 @@ export const addUserToTrip = (name, id) => dispatch => {
         });
 }
 
+/*************delete a user from the trip******/
+export const DELETE_USER_START = "DELETE_USER_START";
+export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
+export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
+
+export const deleteUserFromTrip = (name, id) => dispatch => {
+    axiosWithAuth().delete(`/vacations/${id}/deleteuser`)
+        .then(res => {
+            console.log("deleted");
+        })
+
+}
 /********add a place**********/
 
 export const ADD_PLACE_START = "ADD_PLACE_START";

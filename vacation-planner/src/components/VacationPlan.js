@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip, addUserToTrip, addPlace, addComment } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment, deleteUserFromTrip } from "../actions/index"; 
 
 
 
-const VacationPlan = ({trip, match, findTrip, addPlace, badrequest, addComment, addUserToTrip}) => {
+const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badrequest, addComment, addUserToTrip}) => {
     let [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
     let [ toDos, setToDos ] = useState({suggestion: ""});
@@ -103,7 +103,7 @@ const VacationPlan = ({trip, match, findTrip, addPlace, badrequest, addComment, 
                 <ul>
                 {!badrequest ? (
                     trip.users && trip.users.map( user => {
-                        return <li>{user}</li>
+                        return <li>{user} <button>X</button></li>
                     })
                 ) : (
                     <h5>{badrequest}</h5>
@@ -177,6 +177,6 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, {findTrip, addUserToTrip, addComment, addPlace})(VacationPlan);
+export default connect(mapStateToProps, {findTrip, deleteUserFromTrip, addUserToTrip, addComment, addPlace})(VacationPlan);
 
 // export default VacationPlan;
