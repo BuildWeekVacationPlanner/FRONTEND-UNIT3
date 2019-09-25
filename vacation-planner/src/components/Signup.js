@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+
+
+import axios from "axios";
+
 import Styled from "styled-components";
 import "./Login.css";
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+
+
 
 const StyledForm = Styled.form`
 width: 300px;
@@ -63,9 +68,18 @@ text-align: center;
 margin-top:15px
 `;
 
-const StyledH3 = Styled.h3`
-text-align:center
-`;
+    const submitInfo = (event, creds) => {
+        event.preventDefault();
+        console.log(newUser);
+        axios.post("https://bw-vacation-planner.herokuapp.com/api/auth/register", creds)
+            .then(res => {
+                props.history.push("/");
+            })
+            .catch(err => console.log(err));
+
+// const StyledH3 = Styled.h3`
+// text-align:center
+// `;
 
 const Signup = props => {
   //state
@@ -84,83 +98,110 @@ const Signup = props => {
     }
   };
 
-  //new user info
 
-  const handleNewUser = event => {
-    setNewUser({ ...newUser, [event.target.name]: event.target.value });
-  };
+    return (
+        <div>
+            Sign up!
+            <form onSubmit={(e) => submitInfo(e, newUser)}>
+                <label>username</label>
+                <input 
+                    type="text" 
+                    value={newUser.username}
+                    name="username"
+                    onChange={handleNewUser}
+                />
+                <label>password</label>
+                <input 
+                    type="text" 
+                    value={newUser.password}
+                    name="password"
+                    onChange={handleNewUser} 
+                />
+                <button>Join the club!</button>
+            </form>
+            <div>Already part of the Vacation-Planner community? <Link to="/login">Log in</Link></div>
+        </div>
+    );
+}
+=======
+//   //new user info
 
-  const submitInfo = (event, creds) => {
-    event.preventDefault();
+//   const handleNewUser = event => {
+//     setNewUser({ ...newUser, [event.target.name]: event.target.value });
+//   };
 
-    axiosWithAuth()
-      .post("/auth/register", creds)
-      .then(res => {
-        props.history.push("/");
-      })
-      .catch(err => console.log(err));
-  };
+//   const submitInfo = (event, creds) => {
+//     event.preventDefault();
 
-  //output
+//     axiosWithAuth()
+//       .post("/auth/register", creds)
+//       .then(res => {
+//         props.history.push("/");
+//       })
+//       .catch(err => console.log(err));
+//   };
 
-  return (
-    <div>
-      <StyledForm onSubmit={e => submitInfo(e, newUser)}>
-        <StyledDiv>
-          <StyledH3>Please sign up to get started</StyledH3>
-          <Div>
-            <label htmlFor="FirstName">First Name</label>
-            <StyledInput
-              type="text"
-              value={newUser.username}
-              name="FirstName"
-              id="FirstName"
-              onChange={handleNewUser}
-            />
-          </Div>
+//   //output
 
-          <Div>
-            <label htmlFor="LastName">Last Name</label>
-            <StyledInput
-              type="text"
-              id="LastName"
-              value={newUser.username}
-              name="LastName"
-              onChange={handleNewUser}
-            />
-          </Div>
+//   return (
+//     <div>
+//       <StyledForm onSubmit={e => submitInfo(e, newUser)}>
+//         <StyledDiv>
+//           <StyledH3>Please sign up to get started</StyledH3>
+//           <Div>
+//             <label htmlFor="FirstName">First Name</label>
+//             <StyledInput
+//               type="text"
+//               value={newUser.username}
+//               name="FirstName"
+//               id="FirstName"
+//               onChange={handleNewUser}
+//             />
+//           </Div>
 
-          <Div>
-            <label htmlFor="email">Email</label>
-            <StyledInput
-              type="email"
-              value={newUser.username}
-              name="email"
-              id="email"
-              onChange={handleNewUser}
-            />
-          </Div>
+//           <Div>
+//             <label htmlFor="LastName">Last Name</label>
+//             <StyledInput
+//               type="text"
+//               id="LastName"
+//               value={newUser.username}
+//               name="LastName"
+//               onChange={handleNewUser}
+//             />
+//           </Div>
 
-          <Div>
-            <label htmlFor="password">password</label>
-            <StyledInput
-              type="password"
-              id="password"
-              value={newUser.password}
-              name="password"
-              onChange={handleNewUser}
-            />
-          </Div>
-          <StyledButton disabled={isDisabled()}>Join the club!</StyledButton>
+//           <Div>
+//             <label htmlFor="email">Email</label>
+//             <StyledInput
+//               type="email"
+//               value={newUser.username}
+//               name="email"
+//               id="email"
+//               onChange={handleNewUser}
+//             />
+//           </Div>
 
-          <StyledParagraph>
-            Already part of the Vacation-Planner community?
-            <Link to="/login">Log in</Link>
-          </StyledParagraph>
-        </StyledDiv>
-      </StyledForm>
-    </div>
-  );
-};
+//           <Div>
+//             <label htmlFor="password">password</label>
+//             <StyledInput
+//               type="password"
+//               id="password"
+//               value={newUser.password}
+//               name="password"
+//               onChange={handleNewUser}
+//             />
+//           </Div>
+//           <StyledButton disabled={isDisabled()}>Join the club!</StyledButton>
+
+//           <StyledParagraph>
+//             Already part of the Vacation-Planner community?
+//             <Link to="/login">Log in</Link>
+//           </StyledParagraph>
+//         </StyledDiv>
+//       </StyledForm>
+//     </div>
+//   );
+// };
+
 
 export default Signup;

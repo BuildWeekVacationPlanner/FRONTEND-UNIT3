@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import { PrivateRoute } from "./components/PrivateRoute";
 import VacationPlan from "./components/VacationPlan";
 import Vacations from "./components/Vacations";
 
@@ -13,8 +14,9 @@ function App() {
       <h1>Vacation Planner App</h1>
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
-      <Route path="/vacation" component={Vacations} />
-      <Route path="/myvacation" component={VacationPlan} />
+      <PrivateRoute exact path="/vacation" component={Vacations}/>
+      <PrivateRoute exact path={`/vacation/:id`} component={VacationPlan} />
+
     </div>
   );
 }
