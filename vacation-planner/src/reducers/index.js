@@ -4,10 +4,17 @@ import {ADD_TRIP_START, ADD_TRIP_SUCCESS, ADD_TRIP_FAILURE} from "../actions";
 import {FIND_TRIP_BY_ID_START, FIND_TRIP_BY_ID_SUCCESS, FIND_TRIP_BY_ID_FAILURE} from "../actions";
 import { ADD_USER_START, ADD_USER_SUCCESS, ADD_USER_FAILURE } from "../actions";
 import { ADD_PLACE_START } from "../actions";
+import {GET_PLACE_START, GET_PLACE_SUCCESS, GET_PLACE_FAILURE } from "../actions";
+
+
 
 const initialState = {
     vacations: [],
-    mytrip: {},
+    mytrip: {
+        users:[],
+        suggestions: [],
+    },
+
     isFetching: false,
     error: ""
 }
@@ -73,16 +80,36 @@ export const reducer = (state=initialState, action) => {
             return {
                 ...state
             }
+
         case ADD_USER_SUCCESS:
             return {
                 ...state,
-                mytrip: {...state.mytrip, users: action.payload}
+                mytrip: {...state.mytrip,
+                    users: [...state.mytrip.users, action.payload]}
             } 
+
         case ADD_USER_FAILURE:
             return {
-
+                ...state,
+                error: action.payload
             }
         case ADD_PLACE_START:
+            return {
+                ...state
+            }
+
+        case GET_PLACE_START:
+            return {
+                ...state
+            }
+        case GET_PLACE_SUCCESS: 
+            return {
+                ...state,
+                mytrip: {...state.mytrip,
+                    suggestions: [...state.mytrip.suggestions, action.payload]
+                }
+            } 
+        case GET_PLACE_FAILURE:
             return {
                 ...state
             }

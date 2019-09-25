@@ -66,22 +66,37 @@ export const ADD_USER_SUCCESS = "ADD_USER_SUCCESS";
 export const ADD_USER_FAILURE = "ADD_USER_FAILURE";
 
 
-
 export const addUserToTrip = (name, id) => dispatch => {
     console.log("creds", {users: name});
     console.log("id", id);
     dispatch({ type: ADD_USER_START});
     axiosWithAuth().post(`/vacations/${id}/addUser`, name)
         .then(res => {
-            console.log("res from post", res);
-            dispatch({ type: ADD_USER_SUCCESS, payload: name})
+            if(res.status === 201) {
+                dispatch({ type: ADD_USER_SUCCESS, payload: name.username})
+            }  
         })
         .catch(err => {
-            console.log(err);
-            // ({ type: ADD_USER_FAILURE, payload: `${err}`})
+            if(err){
+                dispatch({type: ADD_USER_FAILURE, payload: 'This username does not exist' })
+            }
         });
 }
 
+/*************delete a user from the trip******/
+export const DELETE_USER_START = "DELETE_USER_START";
+export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
+export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
+
+export const deleteUserFromTrip = (name, id) => dispatch => {
+    axiosWithAuth().delete(`/vacations/${id}/deleteuser`, {data: name})
+        .then(res => {
+            console.log("deleted", res);
+            findTrip(id);
+        })
+        .catch(err => console.log(err));
+
+}
 /********add a place**********/
 
 export const ADD_PLACE_START = "ADD_PLACE_START";
@@ -92,16 +107,32 @@ export const ADD_PLACE_FAILURE = "ADD_PLACE_FAILURE";
 
 export const addPlace = (id, creds) => dispatch => {
     // dispatch({ type: ADD_PLACE_START});
-    axiosWithAuth().post(`/vacations/${id}/suggestions`, creds)
+    axiosWithAuth().post(`/vacations/${id}/suggestions`, {suggestion: creds})
         .then(res => {
-            console.log("New place added!");
-            // dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
+            console.log("New place added!", res);
+            //dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
         })
         .catch(err => {
             console.log(err);
             // dispatch({ type: ADD_PLACE_FAILURE, payload: `${err}`})
         });
 
+}
+
+/*************get places************/
+export const GET_PLACE_START = "GET_PLACE_START";
+export const GET_PLACE_SUCCESS = "GET_PLACE_SUCCESS";
+export const GET_PLACE_FAILURE = "GET_PLACE_FAILURE";
+
+export const getPlaceSuggestions = (id) => dispatch => {
+    console.log("get place suggestions");
+    dispatch({type: GET_PLACE_START})
+    axiosWithAuth().get(`/vacations/${id}/suggestions`)
+        .then(res => {
+            dispatch({type: GET_PLACE_SUCCESS, payload: res.data})
+            console.log("data", res.data);
+        })
+        .catch(err => console.log(err));
 }
 
 /***********add comment*************/
@@ -112,9 +143,9 @@ export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
 
 
 
-export const addComment = (id, creds) => dispatch => {
+export const addComment = (id, comment) => dispatch => {
     // dispatch({ type: ADD_PLACE_START});
-    axiosWithAuth().post(`/vacations/${id}/comments/add`, creds)
+    axiosWithAuth().post(`/vacations/${id}/comments/add`, comment)
         .then(res => {
             console.log("New place added!");
             // dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})

@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <h1>Vacation Planner App</h1>
-      <Route exact path="/login" component={Login} />
+      <Route exact path="/" component={Login} />
       <Route exact path="/signup" component={Signup} />
       <PrivateRoute exact path="/vacation" component={Vacations}/>
       <PrivateRoute exact path={`/vacation/:id`} component={VacationPlan} />

@@ -2,6 +2,8 @@
 import React, { useState} from "react";
 import "./Login.css";
 import Styled from "styled-components";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Login = props => {
 
@@ -26,129 +28,95 @@ const Login = props => {
     return (
         <div>
         <h2>Login page</h2>
-        <form onSubmit={(e) => submitReturningUser(e, returningUser)}>
-            <input 
+        <StyledForm onSubmit={(e) => submitReturningUser(e, returningUser)}>
+            <StyledH3>Sign in here.</StyledH3>
+            <Label>Username</Label>
+            <StyledInput
                 name="username"
                 value={returningUser.username}
                 onChange={handleReturningUser}
             />
-            <input 
+            <Label>password</Label>
+            <StyledInput
                 name="password"
                 value={returningUser.password}
                 onChange={handleReturningUser}
             />
-            <button>Log in</button>
-        </form>
+            <StyledButton>Log in</StyledButton>
+        </StyledForm>
+        <StyledParagraph>No account? No worries! Sign up <Link to="/signup">here</Link>.</StyledParagraph>
         </div>
     );
 }
 
-//Reconcile everything below this line
+export default Login;
 
-// import { Link } from "react-router-dom";
-// import { Formik, withFormik, Form, Field, ErrorMessage } from "formik";
-// import * as yup from "yup";
 
-// const StyledDiv = Styled.div`
-// padding: 0 30px 25px 30px;
 
-// `;
+const Label = Styled.label`
+    text-align: center;
+`
 
-// const Div = Styled.div`
-// margin-top:25px
+const StyledInput = Styled.input`
+width: 188px;
+padding: 10px 25px;
+margin: 0 auto;
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+  Helvetica, Arial, "Lucida Grande", sans-serif;
+font-weight: 400;
+font-size: 14px;
+color: #9d9e9e;
+text-shadow: 1px 1px 0 rgba(256, 256, 256, 1);
+background: #fff;
+border: 1px solid #fff;
+border-radius: 5px;
+box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+`;
 
-// `;
+const StyledH3 = Styled.h3`
+text-align:center
+`;
 
-// const StyledButton = Styled.button`
-// background: #28d;
-// border-color: transparent;
-// color: #fff;
-// cursor: pointer;
-// width: 100%
-// margin-top:25px;
-// font-weight:bold;
-// font-size:14px;
-// height:50px;
-// border-radius:5px
-// `;
+const StyledButton = Styled.button`
+background: #28d;
+border-color: transparent;
+color: #fff;
+cursor: pointer;
+width: 80%
+margin: 0 auto;
+margin-top:25px;
+font-weight:bold;
+font-size:14px;
+height:50px;
+border-radius:5px
+&:hover{
+  background:skyblue
+}
+`;
 
-// const longInForm = {
-//   email: "",
-//   password: ""
-// };
+const StyledParagraph = Styled.div`
+text-align: center;
+margin-top:15px
+`;
 
-// const validationSchema = yup.object().shape({
-//   email: yup.string().required("Email is a required field"),
-//   password: yup.string().required("password is a required field")
-// });
+const StyledForm = Styled.form`
+    padding: 0 30px 25px 30px;
+    width: 300px;
+  margin: 0 auto;
+  position: relative;
+  text-align: left;
+  background: #f3f3f3;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
-// const Login = () => {
-//   const [userForm, setUserForm] = useState(longInForm);
 
-//   const onSubmit = formValues => {
-//     const memberToOnBoard = {
-//       email: formValues.email,
-//       password: formValues.password
-//     };
-//     setUserForm(memberToOnBoard);
-//   };
-
-//   return (
-//     <Formik
-//       validationSchema={validationSchema}
-//       initialValues={longInForm}
-//       onSubmit={onSubmit}
-//       render={props => {
-//         return (
-//           <div>
-//             <Form className="form">
-//               <h2>Enter your login details</h2>
-
-//               <StyledDiv clasName="content">
-//                 <Div>
-//                   <label htmlFor="email">Email</label>
-//                   <Field
-//                     className="field"
-//                     name="email"
-//                     id="email"
-//                     type="email"
-//                     placeholder="email@example.com"
-//                   />
-//                   <ErrorMessage
-//                     style={{ color: "red" }}
-//                     name="email"
-//                     component="div"
-//                   />
-//                 </Div>
-
-//                 <Div>
-//                   <label htmlFor="password">Password</label>
-//                   <Field
-//                     className="field"
-//                     id="password"
-//                     name="password"
-//                     type="password"
-//                     placeholder="Enter password"
-//                   />
-//                   <ErrorMessage
-//                     style={{ color: "red" }}
-//                     name="password"
-//                     component="div"
-//                   />
-//                 </Div>
-//                 <StyledButton type="submit">Login</StyledButton>
-//                 <div className="redirect-signup">
-//                   <p>
-//                     Don't have an account?
-//                     <Link to="/signup"> Signup here</Link>
-//                   </p>
-//                 </div>
-//               </StyledDiv>
-//             </Form>
-//           </div>
-//         );
-//       }}
-//     />
-//   );
-// };
 
