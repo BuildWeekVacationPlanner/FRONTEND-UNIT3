@@ -34,13 +34,12 @@ const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badr
     //places handlers
 
     const handlePlaces = e => {
-        setPlaces(`${e.target.value}`)
+        setPlaces({suggestion: e.target.value});
     }
 
     const submitPlaces = e => {
         e.preventDefault();
         addPlace(id, places);
-        console.log("place", places);
 
     }
 
@@ -48,7 +47,7 @@ const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badr
     //toDo handlers
 
     const handleToDos = e => {
-        setToDos(`${e.target.value}`);
+        setToDos({suggestion: e.target.value});
     }
 
     const submitToDos = e => {
@@ -103,7 +102,7 @@ const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badr
                 <ul>
                 {!badrequest ? (
                     trip.users && trip.users.map( user => {
-                        return <li>{user} <button>X</button></li>
+                        return <li>{user} <button onClick={deleteUserFromTrip}>X</button></li>
                     })
                 ) : (
                     <h5>{badrequest}</h5>
