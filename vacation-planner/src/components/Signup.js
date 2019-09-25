@@ -50,7 +50,7 @@ const Signup = props => {
                     />
                 <StyledButton>Join the club!</StyledButton>
             </StyledForm>
-            <StyledParagraph>Already part of the Vacation-Planner community? <Link to="/login">Log in</Link></StyledParagraph>
+            <StyledParagraph>Already part of the Vacation-Planner community? <Link to="/">Log in</Link></StyledParagraph>
         </div>
     );
 }

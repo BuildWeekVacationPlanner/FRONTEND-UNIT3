@@ -89,10 +89,12 @@ export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 
 export const deleteUserFromTrip = (name, id) => dispatch => {
-    axiosWithAuth().delete(`/vacations/${id}/deleteuser`)
+    axiosWithAuth().delete(`/vacations/${id}/deleteuser`, {data: name})
         .then(res => {
-            console.log("deleted");
+            console.log("deleted", res);
+            findTrip(id);
         })
+        .catch(err => console.log(err));
 
 }
 /********add a place**********/
@@ -105,7 +107,7 @@ export const ADD_PLACE_FAILURE = "ADD_PLACE_FAILURE";
 
 export const addPlace = (id, creds) => dispatch => {
     // dispatch({ type: ADD_PLACE_START});
-    axiosWithAuth().post(`/vacations/${id}/suggestions`, creds)
+    axiosWithAuth().post(`/vacations/${id}/suggestions`, {suggestion: creds})
         .then(res => {
             console.log("New place added!", res);
             //dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
@@ -115,6 +117,22 @@ export const addPlace = (id, creds) => dispatch => {
             // dispatch({ type: ADD_PLACE_FAILURE, payload: `${err}`})
         });
 
+}
+
+/*************get places************/
+export const GET_PLACE_START = "GET_PLACE_START";
+export const GET_PLACE_SUCCESS = "GET_PLACE_SUCCESS";
+export const GET_PLACE_FAILURE = "GET_PLACE_FAILURE";
+
+export const getPlaceSuggestions = (id) => dispatch => {
+    console.log("get place suggestions");
+    dispatch({type: GET_PLACE_START})
+    axiosWithAuth().get(`/vacations/${id}/suggestions`)
+        .then(res => {
+            dispatch({type: GET_PLACE_SUCCESS, payload: res.data})
+            console.log("data", res.data);
+        })
+        .catch(err => console.log(err));
 }
 
 /***********add comment*************/
