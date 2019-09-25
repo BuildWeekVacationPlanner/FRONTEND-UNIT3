@@ -110,8 +110,8 @@ export const addPlace = (id, creds) => dispatch => {
     // dispatch({ type: ADD_PLACE_START});
     axiosWithAuth().post(`/vacations/${id}/suggestions`, creds)
         .then(res => {
-            console.log("New place added!");
-            // dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
+            console.log("New place added!", res);
+            //dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
         })
         .catch(err => {
             console.log(err);

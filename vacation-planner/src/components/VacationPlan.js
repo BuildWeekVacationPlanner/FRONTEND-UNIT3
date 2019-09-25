@@ -6,8 +6,8 @@ import { findTrip, addUserToTrip, addPlace, addComment } from "../actions/index"
 
 const VacationPlan = ({trip, match, findTrip, addPlace, badrequest, addComment, addUserToTrip}) => {
     let [ friends, setFriends ] = useState({username: ""});
-    let [ places, setPlaces ] = useState("");
-    let [ toDos, setToDos ] = useState("");
+    let [ places, setPlaces ] = useState({suggestion: ""});
+    let [ toDos, setToDos ] = useState({suggestion: ""});
     let [ message, setMessage ] = useState({ username: "", topic: "", message: ""});
 
     const id = match.params.id;
@@ -22,7 +22,7 @@ const VacationPlan = ({trip, match, findTrip, addPlace, badrequest, addComment, 
     //friends and family handlers
 
     const handleFriends = e => {
-        setFriends(`username: ${e.target.value}`)
+        setFriends({username: e.target.value})
     }
 
     const submitFriends = e => {
@@ -94,7 +94,7 @@ const VacationPlan = ({trip, match, findTrip, addPlace, badrequest, addComment, 
             <h3>Add friends and family to your trip</h3>
             <form onSubmit={submitFriends}>
                 <input 
-                    value={friends.friends} 
+                    value={friends.username} 
                     name="username" 
                     placeholder="add friends and family" 
                     onChange={(e) => handleFriends(e)}/>
@@ -113,26 +113,29 @@ const VacationPlan = ({trip, match, findTrip, addPlace, badrequest, addComment, 
             </form>
         </div>
         <form onSubmit={submitPlaces}>
-            <label>Places to go</label>
+            <label>Places</label>
             <input 
-                value={places}
-                name="places"
+                type="text"
+                value={places.suggestion}
+                name="suggestion"
                 placeholder="Where will you go?"
                 onChange={(e) => handlePlaces(e)}
              />
             <button>+</button>
         </form>
-        <h4>Places to go...</h4>
+
         <form onSubmit={submitToDos}>
-            <label>Stuff to do</label>
-            <input  
-                value={toDos.todos}
-                name="todos"
-                placeholder="What will you do?"
+            <label>Todos</label>
+            <input 
+                type="text"
+                value={toDos.suggestion}
+                name="suggestion"
+                placeholder="Where will you go?"
                 onChange={(e) => handleToDos(e)}
-            />
+             />
             <button>+</button>
         </form>
+
         <div>
             <h3>Leave a message for your group</h3>
             <form onSubmit={submitMessages}>
