@@ -96,7 +96,8 @@ const Login = () => {
                 <StyledButton type="submit">Login</StyledButton>
                 <div className="redirect-signup">
                   <p>
-                    Don't have an account? <Link to="/"> Signup here</Link>
+                    Don't have an account?
+                    <Link to="/signup"> Signup here</Link>
                   </p>
                 </div>
               </StyledDiv>
