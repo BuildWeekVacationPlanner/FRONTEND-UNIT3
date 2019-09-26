@@ -122,7 +122,7 @@ export const ADD_PLACE_FAILURE = "ADD_PLACE_FAILURE";
 
 export const addPlace = (id, creds) => dispatch => {
     dispatch({ type: ADD_PLACE_START});
-    axiosWithAuth().post(`/vacations/${id}/suggestions/add`, {suggestion: creds})
+    axiosWithAuth().post(`/vacations/${id}/suggestions/add`, creds)
         .then(res => {
             console.log("New place added!", res);
             dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
@@ -165,45 +165,7 @@ export const deletePlace = (id, place) => dispatch => {
         .catch(err => console.log(err))
 }
 
-/**************add todos*************/
-export const ADD_TODOS_START = "ADD_TODOS_START";
-export const ADD_TODOS_SUCCESS = "ADD_TODOS_SUCCESS";
-export const ADD_TODOS_FAILURE = "ADD_TODOS_FAILURE";
 
-export const addToDos = (id, todo) => dispatch => {
-    // dispatch({type: ADD_TODOS_START})
-    axiosWithAuth().post(`/vacations/${id}/suggestions/add`, todo)
-        .then(res => {
-            // dispatch({type: ADD_TODOS_SUCCESS, payload: res.data});
-            console.log(res);})
-        .catch(err => console.log(err))
-}
-
-/**************get todos*************/
-export const GET_TODOS_START = "GET_TODOS_START";
-export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
-export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE";
-
-export const getTodos = (id) => dispatch => {
-    dispatch({type: ADD_TODOS_START})
-    axiosWithAuth().get(`/vacations/${id}/suggestions/add`)
-        .then(res => {
-            dispatch({type: GET_TODOS_SUCCESS, payload: res.data.suggestion})
-            console.log(res);})
-        .catch(err => console.log(err));
-}
-
-/************delete todo*************/
-
-export const DELETE_TODO_START = "DELETE_TODO_START";
-export const DELETE_TODO_SUCCESS = "DELETE_TODO_SUCCESS";
-export const DELETE_TODO_FAILURE = "DELETE_TODO_FAILURE";
-
-export const deleteToDo = (id) => {
-    axiosWithAuth().delete(`/vacations/${id}/suggestions/:id/delete`)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
-}
 
 /***************get comments*********/
 export const GET_COMMENT_START = "GET_COMMENT_START";

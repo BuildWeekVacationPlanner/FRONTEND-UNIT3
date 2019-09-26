@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip, addUserToTrip, addPlace, addComment, getTodos, addToDos, getComments, deleteUserFromTrip, getPlaceSuggestions, getTrips } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment, getComments, deleteUserFromTrip, getPlaceSuggestions, getTrips } from "../actions/index"; 
 import Styled from "styled-components";
 import Nav from "./Nav";
 
 
-const VacationPlan = ({trip, comments, match, history, getComments, findTrip, addToDos, getTodos, addComment, deleteUserFromTrip, addPlace, badrequest,  addUserToTrip, getPlaceSuggestions}) => {
+const VacationPlan = ({trip, comments, match, history, getComments, findTrip, addComment, deleteUserFromTrip, addPlace, badrequest,  addUserToTrip, getPlaceSuggestions}) => {
     const [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
     let [ message, setMessage ] = useState({ comment: ""});
@@ -18,7 +18,6 @@ const VacationPlan = ({trip, comments, match, history, getComments, findTrip, ad
         findTrip(id);
         getPlaceSuggestions(id);
         getComments(id);
-        getTodos(id);
     }, []);
 
 
@@ -121,7 +120,7 @@ const VacationPlan = ({trip, comments, match, history, getComments, findTrip, ad
                 <StyledButton>+</StyledButton>
             </StyledForm>
 
-                    {trip.suggestions && trip.suggestions.map(suggestion => <p>{suggestion}</p>)}
+                    {/* {trip.suggestions && trip.suggestions.map(suggestion => <p>{suggestion}</p>)} */}
  
         </StyledDiv>
 
@@ -139,7 +138,7 @@ const VacationPlan = ({trip, comments, match, history, getComments, findTrip, ad
                 <StyledButton>+</StyledButton>
             </StyledForm>
             <h3>Comments</h3>
-            {comments && comments.map(comment => <h5>{comment.comments}</h5> )}
+            {comments && comments.map(comment => <h5 key={comments.indexOf(comment)}>{comment.comments}</h5> )}
         </div>
        </div>
        </>
@@ -157,7 +156,7 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, {findTrip, deleteUserFromTrip, getTodos, addToDos, getComments, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
+export default connect(mapStateToProps, {findTrip, deleteUserFromTrip, getComments, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
 
 
 
