@@ -189,7 +189,7 @@ export default connect(mapStateToProps, {findTrip, deleteUserFromTrip, addUserTo
 
 
 const StyledForm = Styled.form`
-    padding: 0 30px 25px 30px;
+    padding: 20px; 30px 25px 30px;
     width: 300px;
   margin: 0 auto;
   position: relative;
@@ -205,6 +205,8 @@ const StyledForm = Styled.form`
   justify-content: center;
 `;
 const Label = Styled.label`
+    margin-top: 10px;
+    margin-bottom: 5px;
     text-align: center;
 `;
 const StyledInput = Styled.input`
@@ -225,9 +227,7 @@ box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 `;
 
-const StyledH3 = Styled.h3`
-text-align:center
-`;
+
 
 const StyledButton = Styled.button`
 background: #28d;
@@ -249,4 +249,5 @@ height: 30px;
 
 const StyledDiv = Styled.div`
     border-bottom: 3px gray solid;
+    margin-top: 30px;
 `
