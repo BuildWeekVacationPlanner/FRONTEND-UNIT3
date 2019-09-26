@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip, addUserToTrip, addPlace, addComment, getTodos, addToDos, getTodosaddToDos, getComments, deleteUserFromTrip, getPlaceSuggestions } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment, deleteComment, getComments, deleteUserFromTrip, getPlaceSuggestions, getTrips } from "../actions/index"; 
 import Styled from "styled-components";
 import Nav from "./Nav";
 
 
-const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, getTodos, deleteUserFromTrip, addPlace, badrequest, addComment, addUserToTrip, getPlaceSuggestions}) => {
+const VacationPlan = ({trip, comments, match, suggestions, history, deleteComment, getComments, findTrip, addComment, deleteUserFromTrip, addPlace, badrequest,  addUserToTrip, getPlaceSuggestions}) => {
     const [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
-    let [ toDos, setToDos ] = useState({suggestion: ""});
-    let [ message, setMessage ] = useState({ username: "", topic: "", message: ""});
+    let [ message, setMessage ] = useState({ comment: ""});
 
     const id = match.params.id;
 
@@ -40,37 +39,32 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
     //places handlers
 
     const handlePlaces = e => {
-        setPlaces({suggestion: e.target.value});
+        const {name, value} = e.target;
+        setPlaces({[name]: value});
     }
 
     const submitPlaces = e => {
         e.preventDefault();
+        // addPlace(id, {"suggestion": places});
         addPlace(id, places);
 
     }
 
 
-    //toDo handlers
 
-    const handleToDos = e => {
-        setToDos({suggestion: e.target.value});
-    }
-
-    const submitToDos = e => {
-        e.preventDefault();
-        console.log("successful todo submission", toDos);
-    }
 
 
     //message handlers
     const handleMessages = e => {
-        setMessage({...message, [e.target.name]: e.target.value});
+        const { name, value } = e.target;
+        setMessage({...message, [name]: value});
     }
 
 
     const submitMessages = (e) => {
         e.preventDefault();
         console.log("Hi!", message);
+        // addComment(id, {"comment": message});
         addComment(id, message);
     
     }
@@ -80,6 +74,8 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
        deleteUserFromTrip({"username": user}, id);
  
     }
+
+    suggestions && console.log("suggestions", suggestions);
 
 
     
@@ -116,58 +112,36 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
         </StyledDiv>
         <StyledDiv>
             <StyledForm onSubmit={submitPlaces}>
-                <Label>Places</Label>
+                <Label>Any suggestions</Label>
                 <StyledInput
                     type="text"
                     value={places.suggestion}
                     name="suggestion"
-                    placeholder="Where will you go?"
+                    placeholder="What should we do??"
                     onChange={(e) => handlePlaces(e)}
                 />
                 <StyledButton>+</StyledButton>
             </StyledForm>
-        </StyledDiv>
-        <StyledDiv>
-            <StyledForm onSubmit={submitToDos}>
-                <Label>Todos</Label>
-                <StyledInput
-                    type="text"
-                    value={toDos.suggestion}
-                    name="suggestion"
-                    placeholder="Where will you go?"
-                    onChange={(e) => handleToDos(e)}
-                />
-                <StyledButton>+</StyledButton>
-            </StyledForm>
+
+                    {suggestions && suggestions.map(item => <p>Hi.</p>)}
  
         </StyledDiv>
 
         <div>
             <h3>Leave a message for your group</h3>
             <StyledForm onSubmit={submitMessages}>
-                <Label>Topic</Label>
+                <Label>Comment</Label>
                 <StyledInput
-                    name="topic"
-                    value={message.title}
-                    placeholder="title"
+                    name="comment"
+                    value={message.comment}
+                    placeholder="comment"
                     onChange={handleMessages}
                 />
-                <Label>Your name</Label>
-                <StyledInput
-                    name="username"
-                    value={message.username}
-                    placeholder="username"
-                    onChange={handleMessages}
-                />
-                <Label>Message</Label>
-                <StyledInput
-                    name="message"
-                    onChange={handleMessages}
-                    value={message.message}
-                    placeholder="message goes here"
-                />
+
                 <StyledButton>+</StyledButton>
             </StyledForm>
+            <h3>Comments</h3>
+            {comments && comments.map(comment =><div><h5 key={comments.indexOf(comment)}>{comment.comments}</h5><button onClick={deleteComment(id, comment.id)}>X</button></div>  )}
         </div>
        </div>
        </>
@@ -175,15 +149,18 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
 }
 
 const mapStateToProps = state => {
+    console.log("mstp", state.mytrip);
     return {
         vacations: state.vacations,
         trip: state.mytrip,
-        badrequest: state.error
+        badrequest: state.error,
+        suggestions: state.mytrip.suggestions,
+        comments: state.mytrip.comments
     }
 }
 
 
-export default connect(mapStateToProps, {findTrip, deleteUserFromTrip, getTodos, addToDos, getComments, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
+export default connect(mapStateToProps, {findTrip, deleteComment, deleteUserFromTrip, getComments, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
 
 
 

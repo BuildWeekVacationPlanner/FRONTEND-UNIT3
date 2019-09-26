@@ -6,11 +6,8 @@ import { ADD_PLACE_START, ADD_PLACE_SUCCESS, ADD_PLACE_FAILURE } from "../action
 import { GET_PLACE_START, GET_PLACE_SUCCESS, GET_PLACE_FAILURE } from "../actions";
 import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE } from "../actions";
 import { DELETE_USER_START, DELETE_USER_SUCCESS, DELETE_USER_FAILURE } from "../actions"
-import { ADD_TODOS_START, ADD_TODOS_SUCCESS, ADD_TODOS_FAILURE } from "../actions";
-import { GET_TODOS_START, GET_TODOS_SUCCESS, GET_TODOS_FAILURE } from "../actions";
 import { GET_COMMENT_START, GET_COMMENT_SUCCESS, GET_COMMENT_FAILURE } from "../actions";
 import { DELETE_PLACE_START, DELETE_PLACE_SUCCESS, DELETE_PLACE_FAILURE } from "../actions"
-import { DELETE_TODO_START, DELETE_TODO_SUCCESS , DELETE_TODO_FAILURE  } from "../actions";
 import { DELETE_COMMENT_START, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_FAILURE } from "../actions";
 
 const initialState = {
@@ -104,8 +101,13 @@ export const reducer = (state=initialState, action) => {
                 ...state
             }
         case ADD_PLACE_SUCCESS:
+            console.log("AJFKSL:AJKL", action.payload);
             return {
-                ...state
+                ...state,
+                mytrip: {
+                    ...state.mytrip,
+                    suggestions: [...state.mytrip.suggestions, action.payload[0]]
+                }
             }
         case ADD_PLACE_FAILURE:
             return {
@@ -159,41 +161,8 @@ export const reducer = (state=initialState, action) => {
             return {
                 ...state
             }
-        case ADD_TODOS_START:
-            return {
-                ...state
-            } 
-        case ADD_TODOS_SUCCESS:
-            return {
-                ...state,
-                mytrip: {
-                    ...state.mytrip,
-                    suggestions: [...state.mytrip.todos, action.payload]
-                }
-            }
-        case ADD_TODOS_FAILURE:
-            return {
-                ...state
-            }
-        case GET_TODOS_START: 
-            return {
-                ...state,
-                isFetching: true,
-                
-            }
-        case GET_TODOS_SUCCESS:
-            return {
-                ...state,
-                isFetching: false,
-                suggestions: [...state.mytrip.todos, action.payload]
 
-            }
-        case GET_TODOS_FAILURE:
-            return {
-                ...state,
-                isFetching: false,
-                error: action.payload
-            }
+  
         case GET_COMMENT_START:
             return {
                 ...state,
@@ -225,18 +194,7 @@ export const reducer = (state=initialState, action) => {
             return {
                 ...state
             }
-        case DELETE_TODO_START:
-            return {
-                ...state
-            } 
-        case DELETE_TODO_SUCCESS:
-            return {
-                ...state
-            }
-        case DELETE_TODO_FAILURE:
-            return {
-                ...state
-            }
+
         case DELETE_COMMENT_START:
             return {
                 ...state
