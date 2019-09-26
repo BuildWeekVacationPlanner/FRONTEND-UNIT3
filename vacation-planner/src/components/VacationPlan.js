@@ -158,6 +158,8 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
 
                 <StyledButton>+</StyledButton>
             </StyledForm>
+            <h3>Comments</h3>
+            {trip.comments.map(comment => <h1>{comment}</h1> )}
         </div>
        </div>
        </>
