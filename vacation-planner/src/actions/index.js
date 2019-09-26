@@ -89,12 +89,16 @@ export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAILURE = "DELETE_USER_FAILURE";
 
 export const deleteUserFromTrip = (name, id) => dispatch => {
+    dispatch({type: DELETE_USER_START})
     axiosWithAuth().delete(`/vacations/${id}/deleteuser`, {data: name})
         .then(res => {
             console.log("deleted", res);
+            dispatch({type: DELETE_USER_SUCCESS, payload: res.data})
             findTrip(id);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            dispatch({type: DELETE_USER_FAILURE, payload: `${err}`})
+            console.log(err);});
 
 }
 /********add a place**********/

@@ -181,7 +181,6 @@ const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPl
 }
 
 const mapStateToProps = state => {
-    console.log(state.mytrip.suggestions);
     return {
         vacations: state.vacations,
         trip: state.mytrip,

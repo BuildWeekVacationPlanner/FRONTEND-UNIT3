@@ -5,6 +5,7 @@ import { ADD_USER_START, ADD_USER_SUCCESS, ADD_USER_FAILURE } from "../actions";
 import { ADD_PLACE_START } from "../actions";
 import { GET_PLACE_START, GET_PLACE_SUCCESS, GET_PLACE_FAILURE } from "../actions";
 import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE } from "../actions";
+import {DELETE_USER_START, DELETE_USER_SUCCESS, DELETE_USER_FAILURE } from "../actions"
 
 
 const initialState = {
@@ -129,6 +130,20 @@ export const reducer = (state=initialState, action) => {
             return {
                 ...state,
                 error: action.payload
+            }
+        case DELETE_USER_START:
+            return {
+                ...state
+            }
+        case DELETE_USER_SUCCESS:
+            return {
+                ...state,
+                mytrip: {...state.mytrip,
+                    users: [...state.mytrip.users, action.payload]}
+            }
+        case DELETE_USER_FAILURE:
+            return {
+                ...state
             }
         default:
             return state;
