@@ -74,7 +74,7 @@ const Vacations = ({ vacations, getTrips, deleteTrip, addNewTrip, history }) => 
                                 onChange={handleChange}
                             />
                         </label>
-                    <button>+</button>
+                    <StyledButton>+</StyledButton>
                 </StyledForm>
             </div>
             <div>
@@ -110,6 +110,7 @@ const StyledForm = Styled.form`
 `;
 const Label = Styled.label`
     text-align: center;
+    margin-top: 10px;
 `
 const StyledInput = Styled.input`
 width: 188px;
@@ -140,7 +141,7 @@ color: #fff;
 cursor: pointer;
 font-weight:bold;
 font-size:14px;
-border-radius:50%;
+border-radius: 20px;
 &:hover{
   background:skyblue
 }
