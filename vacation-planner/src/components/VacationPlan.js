@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip, addUserToTrip, addPlace, addComment, getTodos, addToDos, getComments, deleteUserFromTrip, getPlaceSuggestions } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment, getTodos, addToDos, getComments, deleteUserFromTrip, getPlaceSuggestions, getTrips } from "../actions/index"; 
 import Styled from "styled-components";
 import Nav from "./Nav";
 
 
-const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, getTodos, deleteUserFromTrip, addPlace, badrequest, addComment, addUserToTrip, getPlaceSuggestions}) => {
+const VacationPlan = ({trip, comments, match, history, getComments, findTrip, addToDos, getTodos, addComment, deleteUserFromTrip, addPlace, badrequest,  addUserToTrip, getPlaceSuggestions}) => {
     const [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
-    let [ toDos, setToDos ] = useState({suggestion: ""});
     let [ message, setMessage ] = useState({ comment: ""});
 
     const id = match.params.id;
@@ -41,7 +40,8 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
     //places handlers
 
     const handlePlaces = e => {
-        setPlaces({suggestion: e.target.value});
+        const {name, value} = e.target;
+        setPlaces({[name]: value});
     }
 
     const submitPlaces = e => {
@@ -51,22 +51,13 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
     }
 
 
-    //toDo handlers
 
-    const handleToDos = e => {
-        setToDos({suggestion: e.target.value});
-    }
-
-    const submitToDos = e => {
-        e.preventDefault();
-        console.log("successful todo submission", toDos);
-        addToDos(id, places)
-    }
 
 
     //message handlers
     const handleMessages = e => {
         const { name, value } = e.target;
+        // setMessage({...message, [name]: value});
         setMessage({...message, [name]: value});
     }
 
@@ -119,29 +110,18 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
         </StyledDiv>
         <StyledDiv>
             <StyledForm onSubmit={submitPlaces}>
-                <Label>Places</Label>
+                <Label>Any suggestions</Label>
                 <StyledInput
                     type="text"
                     value={places.suggestion}
                     name="suggestion"
-                    placeholder="Where will you go?"
+                    placeholder="What should we do??"
                     onChange={(e) => handlePlaces(e)}
                 />
                 <StyledButton>+</StyledButton>
             </StyledForm>
-        </StyledDiv>
-        <StyledDiv>
-            <StyledForm onSubmit={submitToDos}>
-                <Label>Todos</Label>
-                <StyledInput
-                    type="text"
-                    value={toDos.suggestion}
-                    name="suggestion"
-                    placeholder="Where will you go?"
-                    onChange={(e) => handleToDos(e)}
-                />
-                <StyledButton>+</StyledButton>
-            </StyledForm>
+
+                    {trip.suggestions && trip.suggestions.map(suggestion => <p>{suggestion}</p>)}
  
         </StyledDiv>
 
@@ -159,7 +139,7 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
                 <StyledButton>+</StyledButton>
             </StyledForm>
             <h3>Comments</h3>
-            {trip.comments.map(comment => <h1>{comment}</h1> )}
+            {comments && comments.map(comment => <h5>{comment.comments}</h5> )}
         </div>
        </div>
        </>
@@ -167,10 +147,12 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
 }
 
 const mapStateToProps = state => {
+    console.log("mstp", state.mytrip);
     return {
         vacations: state.vacations,
         trip: state.mytrip,
-        badrequest: state.error
+        badrequest: state.error,
+        comments: state.mytrip.comments
     }
 }
 

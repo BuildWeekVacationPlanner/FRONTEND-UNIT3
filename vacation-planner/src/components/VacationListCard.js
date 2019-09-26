@@ -8,7 +8,7 @@ const VacationListCard = props => {
             <p><strong>Dates: </strong>{props.vacation.dates}</p>
             <p><strong>Destination: </strong>{props.vacation.location}</p>
             <p><strong>Description: </strong>{props.vacation.description}</p>
-            <button onClick={props.deleteTrip(props.vacation.vacation_id)}>Delete</button>
+            <button onClick={() => props.deleteTrip(props.vacation.vacation_id)}>Delete</button>
             <Link to={`/vacation/${props.vacation.vacation_id}`}>Details</Link>
         </div>
     );

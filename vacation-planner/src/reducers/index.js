@@ -105,7 +105,11 @@ export const reducer = (state=initialState, action) => {
             }
         case ADD_PLACE_SUCCESS:
             return {
-                ...state
+                ...state,
+                mytrip: {
+                    ...state.mytrip,
+                    suggestions: [...state.mytrip.suggestions, action.payload]
+                }
             }
         case ADD_PLACE_FAILURE:
             return {

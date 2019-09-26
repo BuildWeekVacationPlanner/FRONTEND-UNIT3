@@ -19,7 +19,8 @@ const Vacations = ({ vacations, getTrips, deleteTrip, addNewTrip, history }) => 
 
     /******* Create a new trip*********/
     const handleChange = e => {
-        setNewTrip({...newTrip, [e.target.name]: e.target.value})
+        const {name, value} = e.target;
+        setNewTrip({...newTrip, [name]: value})
     }
 
 
@@ -28,6 +29,7 @@ const Vacations = ({ vacations, getTrips, deleteTrip, addNewTrip, history }) => 
         addNewTrip(newTrip);
         setNewTrip({title: "", location: "", dates: "", description: ""});
     }
+
 
 
     /***********What you see***********/
@@ -45,7 +47,7 @@ const Vacations = ({ vacations, getTrips, deleteTrip, addNewTrip, history }) => 
                             <StyledInput 
                                 name="title" 
                                 value={newTrip.title} 
-                                onChange={e => handleChange(e)}
+                                onChange={handleChange}
                             />
                         </label>
                         <label>
@@ -53,7 +55,7 @@ const Vacations = ({ vacations, getTrips, deleteTrip, addNewTrip, history }) => 
                             <StyledInput
                                 name="location"
                                 value={newTrip.location}
-                                onChange={e => handleChange(e)}
+                                onChange={handleChange}
                             />
                         </label>
                         <label>
@@ -61,7 +63,7 @@ const Vacations = ({ vacations, getTrips, deleteTrip, addNewTrip, history }) => 
                             <StyledInput
                                 name="dates"
                                 value={newTrip.dates}
-                                onChange={e => handleChange(e)}
+                                onChange={handleChange}
                             />
                         </label>
                         <label>
@@ -69,7 +71,7 @@ const Vacations = ({ vacations, getTrips, deleteTrip, addNewTrip, history }) => 
                             <StyledInput
                                 name="description"
                                 value={newTrip.description}
-                                onChange={e => handleChange(e)}
+                                onChange={handleChange}
                             />
                         </label>
                     <button>+</button>

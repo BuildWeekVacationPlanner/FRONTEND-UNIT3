@@ -33,7 +33,7 @@ export const addNewTrip = creds => dispatch => {
     axiosWithAuth().post("/vacations/add", creds)
         .then(res => {
             console.log("res from post", res);
-            dispatch({ type: ADD_TRIP_SUCCESS, payload: creds})
+            dispatch({ type: ADD_TRIP_SUCCESS, payload: res.data})
         })
         .catch(err => {
             console.log(err);
@@ -47,7 +47,8 @@ export const DELETE_TRIP_SUCCESS = "DELETE_TRIP_SUCCESS";
 export const DELETE_TRIP_FAILURE = "DELETE_TRIP_FAILURE";
 
 export const deleteTrip = (id) => dispatch => {
-    axiosWithAuth().delete(`/vacations/${id}/delete`, id)
+    
+    axiosWithAuth().delete(`/vacations/${id}/delete`)
         .then(res => console.log(res))
         .catch(err => console.log(err))
 }
@@ -120,15 +121,15 @@ export const ADD_PLACE_FAILURE = "ADD_PLACE_FAILURE";
 //currently does not work
 
 export const addPlace = (id, creds) => dispatch => {
-    // dispatch({ type: ADD_PLACE_START});
-    axiosWithAuth().post(`/vacations/${id}/suggestions`, {suggestion: creds})
+    dispatch({ type: ADD_PLACE_START});
+    axiosWithAuth().post(`/vacations/${id}/suggestions/add`, {suggestion: creds})
         .then(res => {
             console.log("New place added!", res);
-            //dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
+            dispatch({ type: ADD_PLACE_SUCCESS, payload: creds})
         })
         .catch(err => {
             console.log(err);
-            // dispatch({ type: ADD_PLACE_FAILURE, payload: `${err}`})
+            dispatch({ type: ADD_PLACE_FAILURE, payload: `${err}`})
         });
 
 }
@@ -144,11 +145,11 @@ export const GET_PLACE_FAILURE = "GET_PLACE_FAILURE";
 
 export const getPlaceSuggestions = (id) => dispatch => {
     console.log("from place actions");
-    // dispatch({type: GET_PLACE_START})
+    dispatch({type: GET_PLACE_START})
     axiosWithAuth().get(`/vacations/${id}/suggestions`)
         .then(res => {
-            // dispatch({type: GET_PLACE_SUCCESS, payload: res.data})
-            console.log("data", res.data);
+            dispatch({type: GET_PLACE_SUCCESS, payload: res.data})
+            console.log("get place suggestions", res.data);
         })
         .catch(err => console.log(err));
 }
@@ -184,10 +185,10 @@ export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
 export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE";
 
 export const getTodos = (id) => dispatch => {
-    //dispatch({type: ADD_TODOS_START})
+    dispatch({type: ADD_TODOS_START})
     axiosWithAuth().get(`/vacations/${id}/suggestions/add`)
         .then(res => {
-            // dispatch({type: GET_TODOS_SUCCESS, payload: res.data})
+            dispatch({type: GET_TODOS_SUCCESS, payload: res.data.suggestion})
             console.log(res);})
         .catch(err => console.log(err));
 }
@@ -210,9 +211,14 @@ export const GET_COMMENT_SUCCESS = "GET_COMMENT_SUCCESS";
 export const GET_COMMENT_FAILURE = "GET_COMMENT_FAILURE";
 
 export const getComments = id => dispatch => {
+    dispatch({ type: GET_COMMENT_START})
     axiosWithAuth().get(`/vacations/${id}/comments`)
-        .then(res => console.log("from 'getComments'", res))
-        .catch(err => console.log(err))
+        .then(res => {
+            dispatch({ type: GET_COMMENT_SUCCESS, payload: res.data})
+            console.log("from 'getComments'", res);})
+        .catch(err => {
+            dispatch({ type: GET_COMMENT_FAILURE})
+            console.log(err)})
 }
 
 /***********add comment*************/
@@ -244,6 +250,7 @@ export const DELETE_COMMENT_SUCCESS = "DELETE_COMMENT_SUCCESS";
 export const DELETE_COMMENT_FAILURE = "DELETE_COMMENT_FAILURE";
 
 export const deleteComment = (id) => dispatch => {
+
     axiosWithAuth().delete()
         .then(res => console.log(res))
         .catch(err => console.log(err));
