@@ -101,11 +101,12 @@ export const reducer = (state=initialState, action) => {
                 ...state
             }
         case ADD_PLACE_SUCCESS:
+            console.log("AJFKSL:AJKL", action.payload);
             return {
                 ...state,
                 mytrip: {
                     ...state.mytrip,
-                    suggestions: [...state.mytrip.suggestions, action.payload]
+                    suggestions: [...state.mytrip.suggestions, action.payload[0]]
                 }
             }
         case ADD_PLACE_FAILURE:

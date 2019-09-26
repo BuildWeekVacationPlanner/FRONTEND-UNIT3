@@ -5,7 +5,7 @@ import Styled from "styled-components";
 import Nav from "./Nav";
 
 
-const VacationPlan = ({trip, comments, match, history, getComments, findTrip, addComment, deleteUserFromTrip, addPlace, badrequest,  addUserToTrip, getPlaceSuggestions}) => {
+const VacationPlan = ({trip, comments, match, suggestions, history, getComments, findTrip, addComment, deleteUserFromTrip, addPlace, badrequest,  addUserToTrip, getPlaceSuggestions}) => {
     const [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
     let [ message, setMessage ] = useState({ comment: ""});
@@ -45,7 +45,8 @@ const VacationPlan = ({trip, comments, match, history, getComments, findTrip, ad
 
     const submitPlaces = e => {
         e.preventDefault();
-        addPlace(id, {"suggestion": places});
+        // addPlace(id, {"suggestion": places});
+        addPlace(id, places);
 
     }
 
@@ -73,6 +74,8 @@ const VacationPlan = ({trip, comments, match, history, getComments, findTrip, ad
        deleteUserFromTrip({"username": user}, id);
  
     }
+
+    suggestions && console.log("suggestions", suggestions);
 
 
     
@@ -120,7 +123,7 @@ const VacationPlan = ({trip, comments, match, history, getComments, findTrip, ad
                 <StyledButton>+</StyledButton>
             </StyledForm>
 
-                    {/* {trip.suggestions && trip.suggestions.map(suggestion => <p>{suggestion}</p>)} */}
+                    {suggestions && suggestions.map(item => <p>Hi.</p>)}
  
         </StyledDiv>
 
@@ -151,6 +154,7 @@ const mapStateToProps = state => {
         vacations: state.vacations,
         trip: state.mytrip,
         badrequest: state.error,
+        suggestions: state.mytrip.suggestions,
         comments: state.mytrip.comments
     }
 }
