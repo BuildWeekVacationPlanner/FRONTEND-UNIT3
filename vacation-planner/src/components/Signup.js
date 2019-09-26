@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
-
 import axios from "axios";
-
 import Styled from "styled-components";
 import "./Login.css";
 
-
-
 const Signup = props => {
   //state
-  const [newUser, setNewUser] = useState({ username: "", password: ""})
+  const [newUser, setNewUser] = useState({ username: "", password: "" });
 
   const submitInfo = (event, creds) => {
     event.preventDefault();
+
     axios.post("https://bw-vacation-planner.herokuapp.com/api/auth/register", creds)
         .then(res => {
             props.history.push("/");
@@ -22,44 +18,42 @@ const Signup = props => {
         .catch(err => console.log(err));
       }
 
+
   const handleNewUser = e => {
     const {name, value} = e.target;
     setNewUser({ ...newUser, [name]: value });
   };
 
-
-
-    return (
-        <div>
-            <h1>Vacation Planner App</h1>
-            <StyledForm onSubmit={(e) => submitInfo(e, newUser)}>
-                <StyledH3>Sign up!</StyledH3>
-                    <Label>username</Label>
-                    <StyledInput
-                        type="text" 
-                        value={newUser.username}
-                        name="username"
-                        onChange={handleNewUser}
-                    />
-                    <Label>password</Label>
-                    <StyledInput 
-                        type="text" 
-                        value={newUser.password}
-                        name="password"
-                        onChange={handleNewUser} 
-                    />
-                <StyledButton>Join the club!</StyledButton>
-            </StyledForm>
-            <StyledParagraph>Already part of the Vacation-Planner community? <Link to="/">Log in</Link></StyledParagraph>
-        </div>
-    );
-}
-
-
+  return (
+    <div>
+      <StyledForm onSubmit={e => submitInfo(e, newUser)}>
+        <StyledH3>Sign up!</StyledH3>
+        <Label>username</Label>
+        <StyledInput
+          type="text"
+          value={newUser.username}
+          name="username"
+          onChange={handleNewUser}
+        />
+        <Label>password</Label>
+        <StyledInput
+          type="text"
+          value={newUser.password}
+          name="password"
+          onChange={handleNewUser}
+        />
+        <StyledButton>Join the club!</StyledButton>
+        <StyledParagraph>
+          Already part of the Vacation-Planner community?{" "}
+          <Link to="/">Log in</Link>
+        </StyledParagraph>
+      </StyledForm>
+    </div>
+  );
+};
 
 
 export default Signup;
-
 
 //styles
 
@@ -81,7 +75,7 @@ const StyledForm = Styled.form`
 `;
 const Label = Styled.label`
     text-align: center;
-`
+`;
 const StyledInput = Styled.input`
 width: 188px;
 padding: 10px 25px;
