@@ -171,7 +171,7 @@ export const ADD_TODOS_FAILURE = "ADD_TODOS_FAILURE";
 
 export const addToDos = (id, todo) => dispatch => {
     // dispatch({type: ADD_TODOS_START})
-    axiosWithAuth.post(`/vacations/${id}/suggestions/add`, todo)
+    axiosWithAuth().post(`/vacations/${id}/suggestions/add`, todo)
         .then(res => {
             // dispatch({type: ADD_TODOS_SUCCESS, payload: res.data});
             console.log(res);})
@@ -199,7 +199,7 @@ export const DELETE_TODO_SUCCESS = "DELETE_TODO_SUCCESS";
 export const DELETE_TODO_FAILURE = "DELETE_TODO_FAILURE";
 
 export const deleteToDo = (id) => {
-    axiosWithAuth.delete(`/vacations/${id}/suggestions/:id/delete`)
+    axiosWithAuth().delete(`/vacations/${id}/suggestions/:id/delete`)
         .then(res => console.log(res))
         .catch(err => console.log(err))
 }

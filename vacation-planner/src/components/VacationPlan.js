@@ -9,7 +9,7 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
     const [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
     let [ toDos, setToDos ] = useState({suggestion: ""});
-    let [ message, setMessage ] = useState({ username: "", topic: "", message: ""});
+    let [ message, setMessage ] = useState({ comment: ""});
 
     const id = match.params.id;
 
@@ -46,7 +46,7 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
 
     const submitPlaces = e => {
         e.preventDefault();
-        addPlace(id, places);
+        addPlace(id, {"suggestion": places});
 
     }
 
@@ -66,14 +66,15 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
 
     //message handlers
     const handleMessages = e => {
-        setMessage({...message, [e.target.name]: e.target.value});
+        const { name, value } = e.target;
+        setMessage({...message, [name]: value});
     }
 
 
     const submitMessages = (e) => {
         e.preventDefault();
         console.log("Hi!", message);
-        addComment(id, message);
+        addComment(id, {"comment": message});
     
     }
 
@@ -147,27 +148,14 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
         <div>
             <h3>Leave a message for your group</h3>
             <StyledForm onSubmit={submitMessages}>
-                <Label>Topic</Label>
+                <Label>Comment</Label>
                 <StyledInput
-                    name="topic"
-                    value={message.title}
-                    placeholder="title"
+                    name="comment"
+                    value={message.comment}
+                    placeholder="comment"
                     onChange={handleMessages}
                 />
-                <Label>Your name</Label>
-                <StyledInput
-                    name="username"
-                    value={message.username}
-                    placeholder="username"
-                    onChange={handleMessages}
-                />
-                <Label>Message</Label>
-                <StyledInput
-                    name="message"
-                    onChange={handleMessages}
-                    value={message.message}
-                    placeholder="message goes here"
-                />
+
                 <StyledButton>+</StyledButton>
             </StyledForm>
         </div>
