@@ -10,22 +10,30 @@ const Signup = props => {
 
   const submitInfo = (event, creds) => {
     event.preventDefault();
-    console.log(newUser);
-    axios
-      .post(
-        "https://bw-vacation-planner.herokuapp.com/api/auth/register",
-        creds
-      )
-      .then(res => {
-        props.history.push("/");
-      })
-      .catch(err => console.log(err));
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9003b49d92e27cc9f2f35b71bb896f659236c53
+    axios.post("https://bw-vacation-planner.herokuapp.com/api/auth/register", creds)
+        .then(res => {
+            props.history.push("/");
+        })
+        .catch(err => console.log(err));
+      }
+
+
+  const handleNewUser = e => {
+    const {name, value} = e.target;
+    setNewUser({ ...newUser, [name]: value });
   };
 
-  const handleNewUser = event => {
-    setNewUser({ ...newUser, [event.target.name]: event.target.value });
-  };
+<<<<<<< HEAD
 
+
+
+
+=======
+>>>>>>> c9003b49d92e27cc9f2f35b71bb896f659236c53
   return (
     <div>
       <StyledForm onSubmit={e => submitInfo(e, newUser)}>
@@ -53,6 +61,7 @@ const Signup = props => {
     </div>
   );
 };
+
 
 export default Signup;
 
@@ -84,7 +93,7 @@ margin: 0 auto;
 font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
   Helvetica, Arial, "Lucida Grande", sans-serif;
 font-weight: 400;
-font-size: 14px;
+height: 30px;
 color: #9d9e9e;
 text-shadow: 1px 1px 0 rgba(256, 256, 256, 1);
 background: #fff;

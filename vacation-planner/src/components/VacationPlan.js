@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip, addUserToTrip, addPlace, addComment, deleteUserFromTrip, getPlaceSuggestions } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment, getTodos, addToDos, getTodosaddToDos, getComments, deleteUserFromTrip, getPlaceSuggestions } from "../actions/index"; 
 import Styled from "styled-components";
+import Nav from "./Nav";
 
 
-const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badrequest, addComment, addUserToTrip, getPlaceSuggestions}) => {
-    let [ friends, setFriends ] = useState({username: ""});
+const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, getTodos, deleteUserFromTrip, addPlace, badrequest, addComment, addUserToTrip, getPlaceSuggestions}) => {
+    const [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
     let [ toDos, setToDos ] = useState({suggestion: ""});
     let [ message, setMessage ] = useState({ username: "", topic: "", message: ""});
@@ -16,23 +17,24 @@ const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badr
 
     useEffect(() => {
         findTrip(id);
+        getPlaceSuggestions(id);
+        getComments(id);
     }, []);
 
-    // useEffect(() => {
-    //     getPlaceSuggestions(id);
-    // }, [])
+
    
  
     //friends and family handlers
 
     const handleFriends = e => {
+        e.preventDefault();
         setFriends({username: e.target.value})
     }
 
     const submitFriends = e => {
         e.preventDefault();
-        console.log("submit", friends);
         addUserToTrip(friends, id);
+        setFriends({username: ""})
     }
 
     //places handlers
@@ -73,73 +75,69 @@ const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badr
     
     }
 
-    const deleteUser = (user, e) => {
-        e.preventDefault();
-        console.log(user, id);
+    const deleteUser = (user) => {
+
        deleteUserFromTrip({"username": user}, id);
  
     }
 
-    useEffect(() => {
-        getPlaceSuggestions(id);
-    }, [])
+
     
     return (
+        <>
+        <Nav history={history}/>
         <div>
+        
         <h2>{trip.title}</h2>
 
           <StyledDiv>
             <h3>Add friends and family to your trip</h3>
             <StyledForm onSubmit={submitFriends}>
-                <input 
+                <StyledInput
+                    type="text"
                     value={friends.username} 
                     name="username" 
                     placeholder="add friends and family" 
-                    onChange={(e) => handleFriends(e)}/>
-                <button>+</button>
+                    onChange={handleFriends}/>
+                <StyledButton>+</StyledButton>
 
             </StyledForm>
                 <h4>Friends</h4>
-                <ul>
+                {/* <ul> */}
                 {!badrequest ? (
                     trip.users && trip.users.map( user => {
-                        return <li key={Date.now()}>{user} <button onClick={e => deleteUser(user, e)}>X</button></li>
+                        return <p key={trip.users.indexOf(user)}>{user} <button onClick={() => deleteUser( user)}>X</button></p>
                     }) 
                 ) : (
                     <h5>{badrequest}</h5>
                  )}
-{/*                 
-                {trip.users.map( user => {
-                        return <li key={Date.now()}>{user} <button onClick=>X</button></li>
-                    })} */}
-                
-                </ul>
+    
+
         </StyledDiv>
         <StyledDiv>
             <StyledForm onSubmit={submitPlaces}>
-                <label>Places</label>
-                <input 
+                <Label>Places</Label>
+                <StyledInput
                     type="text"
                     value={places.suggestion}
                     name="suggestion"
                     placeholder="Where will you go?"
                     onChange={(e) => handlePlaces(e)}
                 />
-                <button>+</button>
+                <StyledButton>+</StyledButton>
             </StyledForm>
-            <StyledButton>Show places to go</StyledButton>
         </StyledDiv>
         <StyledDiv>
             <StyledForm onSubmit={submitToDos}>
-                <label>Todos</label>
-                <input 
+                <Label>Todos</Label>
+                <StyledInput
                     type="text"
                     value={toDos.suggestion}
                     name="suggestion"
                     placeholder="Where will you go?"
                     onChange={(e) => handleToDos(e)}
                 />
-                <button>+</button>
+                <StyledButton>+</StyledButton>
             </StyledForm>
  
         </StyledDiv>
@@ -147,36 +145,36 @@ const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badr
         <div>
             <h3>Leave a message for your group</h3>
             <StyledForm onSubmit={submitMessages}>
-                <label>Topic</label>
-                <input 
+                <Label>Topic</Label>
+                <StyledInput
                     name="topic"
                     value={message.title}
                     placeholder="title"
                     onChange={handleMessages}
                 />
-                <label>Your name</label>
-                <input 
+                <Label>Your name</Label>
+                <StyledInput
                     name="username"
                     value={message.username}
                     placeholder="username"
                     onChange={handleMessages}
                 />
-                <label>Message</label>
-                <input 
+                <Label>Message</Label>
+                <StyledInput
                     name="message"
                     onChange={handleMessages}
                     value={message.message}
                     placeholder="message goes here"
                 />
-                <button>+</button>
+                <StyledButton>+</StyledButton>
             </StyledForm>
         </div>
        </div>
+       </>
     );
 }
 
 const mapStateToProps = state => {
-    console.log(state.mytrip.suggestions);
     return {
         vacations: state.vacations,
         trip: state.mytrip,
@@ -185,13 +183,13 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, {findTrip, deleteUserFromTrip, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
+export default connect(mapStateToProps, {findTrip, deleteUserFromTrip, getTodos, addToDos, getComments, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
 
 
 
 
 const StyledForm = Styled.form`
-    padding: 0 30px 25px 30px;
+    padding: 20px; 30px 25px 30px;
     width: 300px;
   margin: 0 auto;
   position: relative;
@@ -207,6 +205,8 @@ const StyledForm = Styled.form`
   justify-content: center;
 `;
 const Label = Styled.label`
+    margin-top: 10px;
+    margin-bottom: 5px;
     text-align: center;
 `;
 const StyledInput = Styled.input`
@@ -227,9 +227,7 @@ box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 `;
 
-const StyledH3 = Styled.h3`
-text-align:center
-`;
+
 
 const StyledButton = Styled.button`
 background: #28d;
@@ -238,7 +236,12 @@ color: #fff;
 cursor: pointer;
 font-weight:bold;
 font-size:14px;
+text-align: center;
 border-radius:50%;
+margin: 0 auto;
+margin-top: 10px;
+width: 30px;
+height: 30px;
 &:hover{
   background:skyblue
 }
@@ -246,4 +249,5 @@ border-radius:50%;
 
 const StyledDiv = Styled.div`
     border-bottom: 3px gray solid;
+    margin-top: 30px;
 `
