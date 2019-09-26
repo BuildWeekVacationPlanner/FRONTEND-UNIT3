@@ -9,6 +9,9 @@ import { DELETE_USER_START, DELETE_USER_SUCCESS, DELETE_USER_FAILURE } from "../
 import { ADD_TODOS_START, ADD_TODOS_SUCCESS, ADD_TODOS_FAILURE } from "../actions";
 import { GET_TODOS_START, GET_TODOS_SUCCESS, GET_TODOS_FAILURE } from "../actions";
 import { GET_COMMENT_START, GET_COMMENT_SUCCESS, GET_COMMENT_FAILURE } from "../actions";
+import { DELETE_PLACE_START, DELETE_PLACE_SUCCESS, DELETE_PLACE_FAILURE } from "../actions"
+import { DELETE_TODO_START, DELETE_TODO_SUCCESS , DELETE_TODO_FAILURE  } from "../actions";
+import { DELETE_COMMENT_START, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_FAILURE } from "../actions";
 
 const initialState = {
     vacations: [],
@@ -156,6 +159,98 @@ export const reducer = (state=initialState, action) => {
             return {
                 ...state
             }
+        case ADD_TODOS_START:
+            return {
+                ...state
+            } 
+        case ADD_TODOS_SUCCESS:
+            return {
+                ...state,
+                mytrip: {
+                    ...state.mytrip,
+                    suggestions: [...state.mytrip.todos, action.payload]
+                }
+            }
+        case ADD_TODOS_FAILURE:
+            return {
+                ...state
+            }
+        case GET_TODOS_START: 
+            return {
+                ...state,
+                isFetching: true,
+                
+            }
+        case GET_TODOS_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                suggestions: [...state.mytrip.todos, action.payload]
+
+            }
+        case GET_TODOS_FAILURE:
+            return {
+                ...state,
+                isFetching: false,
+                error: action.payload
+            }
+        case GET_COMMENT_START:
+            return {
+                ...state,
+                isFetching: true,
+                error: ""
+            }
+        case GET_COMMENT_SUCCESS: 
+            return {
+                ...state,
+                isFetching: false,
+                mytrip: {
+                    ...state.mytrip,
+                    comments: action.payload
+
+                }
+            } 
+        case GET_COMMENT_FAILURE:
+            return {
+                ...state
+            }
+        case DELETE_PLACE_START:
+            return {
+                ...state
+            } 
+        case DELETE_PLACE_SUCCESS:
+            return {
+            }
+        case DELETE_PLACE_FAILURE: 
+            return {
+                ...state
+            }
+        case DELETE_TODO_START:
+            return {
+                ...state
+            } 
+        case DELETE_TODO_SUCCESS:
+            return {
+                ...state
+            }
+        case DELETE_TODO_FAILURE:
+            return {
+                ...state
+            }
+        case DELETE_COMMENT_START:
+            return {
+                ...state
+            } 
+        case DELETE_COMMENT_SUCCESS: 
+            return {
+                ...state
+            }
+        
+        case DELETE_COMMENT_FAILURE:
+            return {
+                ...state
+            }
+        
         default:
             return state;
     }

@@ -143,7 +143,17 @@ export const getPlaceSuggestions = (id) => dispatch => {
         })
         .catch(err => console.log(err));
 }
+/************delete a place*************/
 
+export const DELETE_PLACE_START = "DELETE_PLACE_START";
+export const DELETE_PLACE_SUCCESS = "DELETE_PLACE_SUCCESS";
+export const DELETE_PLACE_FAILURE = "DELETE_PLACE_FAILURE";
+
+export const deletePlace = (id) => dispatch => {
+    axiosWithAuth().delete(``)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+}
 
 /**************add todos*************/
 export const ADD_TODOS_START = "ADD_TODOS_START";
@@ -167,6 +177,17 @@ export const getTodos = () => dispatch => {
         .catch(err => console.log(err));
 }
 
+/************delete todo*************/
+
+export const DELETE_TODO_START = "DELETE_TODO_START";
+export const DELETE_TODO_SUCCESS = "DELETE_TODO_SUCCESS";
+export const DELETE_TODO_FAILURE = "DELETE_TODO_FAILURE";
+
+export const deleteToDo = () => {
+    axiosWithAuth.delete()
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+}
 
 /***************get comments*********/
 export const GET_COMMENT_START = "GET_COMMENT_START";
@@ -201,4 +222,14 @@ export const addComment = (id, comment) => dispatch => {
 
 }
 
+/************delete a comment*************/
 
+export const DELETE_COMMENT_START = "DELETE_COMMENT_START";
+export const DELETE_COMMENT_SUCCESS = "DELETE_COMMENT_SUCCESS";
+export const DELETE_COMMENT_FAILURE = "DELETE_COMMENT_FAILURE";
+
+export const deleteComment = (id) => dispatch => {
+    axiosWithAuth().delete()
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+}
