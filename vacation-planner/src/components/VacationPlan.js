@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip, addUserToTrip, addPlace, addComment, getComments, deleteUserFromTrip, getPlaceSuggestions, getTrips } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment, deleteComment, getComments, deleteUserFromTrip, getPlaceSuggestions, getTrips } from "../actions/index"; 
 import Styled from "styled-components";
 import Nav from "./Nav";
 
 
-const VacationPlan = ({trip, comments, match, suggestions, history, getComments, findTrip, addComment, deleteUserFromTrip, addPlace, badrequest,  addUserToTrip, getPlaceSuggestions}) => {
+const VacationPlan = ({trip, comments, match, suggestions, history, deleteComment, getComments, findTrip, addComment, deleteUserFromTrip, addPlace, badrequest,  addUserToTrip, getPlaceSuggestions}) => {
     const [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
     let [ message, setMessage ] = useState({ comment: ""});
@@ -141,7 +141,7 @@ const VacationPlan = ({trip, comments, match, suggestions, history, getComments,
                 <StyledButton>+</StyledButton>
             </StyledForm>
             <h3>Comments</h3>
-            {comments && comments.map(comment => <h5 key={comments.indexOf(comment)}>{comment.comments}</h5> )}
+            {comments && comments.map(comment =><div><h5 key={comments.indexOf(comment)}>{comment.comments}</h5><button onClick={deleteComment(id, comment.id)}>X</button></div>  )}
         </div>
        </div>
        </>
@@ -160,7 +160,7 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, {findTrip, deleteUserFromTrip, getComments, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
+export default connect(mapStateToProps, {findTrip, deleteComment, deleteUserFromTrip, getComments, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
 
 
 

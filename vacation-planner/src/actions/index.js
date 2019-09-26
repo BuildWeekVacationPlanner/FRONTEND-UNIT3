@@ -208,9 +208,13 @@ export const DELETE_COMMENT_START = "DELETE_COMMENT_START";
 export const DELETE_COMMENT_SUCCESS = "DELETE_COMMENT_SUCCESS";
 export const DELETE_COMMENT_FAILURE = "DELETE_COMMENT_FAILURE";
 
-export const deleteComment = (id) => dispatch => {
-
-    axiosWithAuth().delete()
-        .then(res => console.log(res))
-        .catch(err => console.log(err));
+export const deleteComment = (tripId, suggestionId) => dispatch => {
+    dispatch({ type: DELETE_COMMENT_START});
+    axiosWithAuth().delete(`/vacations/${tripId}/comments/${suggestionId}/delete`)
+        .then(res => {
+            dispatch({ type: DELETE_COMMENT_SUCCESS})
+            console.log("do da delete", res);})
+        .catch(err => {
+            dispatch({ type: DELETE_COMMENT_SUCCESS})
+            console.log(err)});
 }
