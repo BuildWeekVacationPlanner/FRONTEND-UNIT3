@@ -10,10 +10,7 @@ const Signup = props => {
 
   const submitInfo = (event, creds) => {
     event.preventDefault();
-<<<<<<< HEAD
-=======
 
->>>>>>> c9003b49d92e27cc9f2f35b71bb896f659236c53
     axios.post("https://bw-vacation-planner.herokuapp.com/api/auth/register", creds)
         .then(res => {
             props.history.push("/");
@@ -27,13 +24,6 @@ const Signup = props => {
     setNewUser({ ...newUser, [name]: value });
   };
 
-<<<<<<< HEAD
-
-
-
-
-=======
->>>>>>> c9003b49d92e27cc9f2f35b71bb896f659236c53
   return (
     <div>
       <StyledForm onSubmit={e => submitInfo(e, newUser)}>

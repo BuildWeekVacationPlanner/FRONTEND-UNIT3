@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip, addUserToTrip, addPlace, addComment, getTodos, addToDos, getTodosaddToDos, getComments, deleteUserFromTrip, getPlaceSuggestions } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment, getTodos, addToDos, getComments, deleteUserFromTrip, getPlaceSuggestions } from "../actions/index"; 
 import Styled from "styled-components";
 import Nav from "./Nav";
 
@@ -19,6 +19,7 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
         findTrip(id);
         getPlaceSuggestions(id);
         getComments(id);
+        getTodos(id);
     }, []);
 
 
