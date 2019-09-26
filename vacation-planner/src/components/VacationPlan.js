@@ -56,7 +56,6 @@ const VacationPlan = ({trip, comments, match, history, getComments, findTrip, ad
     //message handlers
     const handleMessages = e => {
         const { name, value } = e.target;
-        // setMessage({...message, [name]: value});
         setMessage({...message, [name]: value});
     }
 
@@ -64,7 +63,8 @@ const VacationPlan = ({trip, comments, match, history, getComments, findTrip, ad
     const submitMessages = (e) => {
         e.preventDefault();
         console.log("Hi!", message);
-        addComment(id, {"comment": message});
+        // addComment(id, {"comment": message});
+        addComment(id, message);
     
     }
 
