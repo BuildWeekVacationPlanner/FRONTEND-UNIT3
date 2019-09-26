@@ -108,6 +108,7 @@ export const ADD_PLACE_SUCCESS = "ADD_PLACE_SUCCESS";
 export const ADD_PLACE_FAILURE = "ADD_PLACE_FAILURE";
 
 
+//currently does not work
 
 export const addPlace = (id, creds) => dispatch => {
     // dispatch({ type: ADD_PLACE_START});
@@ -123,20 +124,59 @@ export const addPlace = (id, creds) => dispatch => {
 
 }
 
+
+
 /*************get places************/
+
+//currently pulls data, but it is not going to the right place in state//
 export const GET_PLACE_START = "GET_PLACE_START";
 export const GET_PLACE_SUCCESS = "GET_PLACE_SUCCESS";
 export const GET_PLACE_FAILURE = "GET_PLACE_FAILURE";
 
 export const getPlaceSuggestions = (id) => dispatch => {
-    console.log("get place suggestions");
-    dispatch({type: GET_PLACE_START})
+    console.log("from place actions");
+    // dispatch({type: GET_PLACE_START})
     axiosWithAuth().get(`/vacations/${id}/suggestions`)
         .then(res => {
-            dispatch({type: GET_PLACE_SUCCESS, payload: res.data})
+            // dispatch({type: GET_PLACE_SUCCESS, payload: res.data})
             console.log("data", res.data);
         })
         .catch(err => console.log(err));
+}
+
+
+/**************add todos*************/
+export const ADD_TODOS_START = "ADD_TODOS_START";
+export const ADD_TODOS_SUCCESS = "ADD_TODOS_SUCCESS";
+export const ADD_TODOS_FAILURE = "ADD_TODOS_FAILURE";
+
+export const addToDos = () => dispatch => {
+    axiosWithAuth.post(``)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+}
+
+/**************get todos*************/
+export const GET_TODOS_START = "GET_TODOS_START";
+export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
+export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE";
+
+export const getTodos = () => dispatch => {
+    axiosWithAuth().get(``)
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+}
+
+
+/***************get comments*********/
+export const GET_COMMENT_START = "GET_COMMENT_START";
+export const GET_COMMENT_SUCCESS = "GET_COMMENT_SUCCESS";
+export const GET_COMMENT_FAILURE = "GET_COMMENT_FAILURE";
+
+export const getComments = id => dispatch => {
+    axiosWithAuth().get(`/vacations/${id}/comments`)
+        .then(res => console.log("from 'getComments'", res))
+        .catch(err => console.log(err))
 }
 
 /***********add comment*************/
@@ -151,7 +191,7 @@ export const addComment = (id, comment) => dispatch => {
     dispatch({ type: ADD_COMMENT_START});
     axiosWithAuth().post(`/vacations/${id}/comments/add`, comment)
         .then(res => {
-            console.log("New place added!");
+            console.log("New comment added!");
             dispatch({ type: ADD_COMMENT_SUCCESS, payload: comment})
         })
         .catch(err => {
@@ -160,3 +200,5 @@ export const addComment = (id, comment) => dispatch => {
         });
 
 }
+
+

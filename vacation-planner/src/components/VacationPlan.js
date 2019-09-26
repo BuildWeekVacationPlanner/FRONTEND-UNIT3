@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip, addUserToTrip, addPlace, addComment, deleteUserFromTrip, getPlaceSuggestions } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment, getComments, deleteUserFromTrip, getPlaceSuggestions } from "../actions/index"; 
 import Styled from "styled-components";
 import Nav from "./Nav";
 
 
-const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPlace, badrequest, addComment, addUserToTrip, getPlaceSuggestions}) => {
+const VacationPlan = ({trip, match, history, getComments, findTrip, deleteUserFromTrip, addPlace, badrequest, addComment, addUserToTrip, getPlaceSuggestions}) => {
     const [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
     let [ toDos, setToDos ] = useState({suggestion: ""});
@@ -17,6 +17,8 @@ const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPl
 
     useEffect(() => {
         findTrip(id);
+        getPlaceSuggestions(id);
+        getComments(id);
     }, []);
 
 
@@ -79,9 +81,7 @@ const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPl
  
     }
 
-    useEffect(() => {
-        getPlaceSuggestions(id);
-    }, [])
+
     
     return (
         <>
@@ -183,7 +183,7 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, {findTrip, deleteUserFromTrip, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
+export default connect(mapStateToProps, {findTrip, deleteUserFromTrip, getComments, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
 
 
 
