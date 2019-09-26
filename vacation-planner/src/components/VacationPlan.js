@@ -74,8 +74,7 @@ const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPl
     }
 
     const deleteUser = (user) => {
-        // e.preventDefault();
-        console.log("from delete user function", user, id);
+
        deleteUserFromTrip({"username": user}, id);
  
     }
@@ -100,50 +99,45 @@ const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPl
                     name="username" 
                     placeholder="add friends and family" 
                     onChange={handleFriends}/>
-                <button>+</button>
+                <StyledButton>+</StyledButton>
 
             </StyledForm>
                 <h4>Friends</h4>
                 {/* <ul> */}
                 {!badrequest ? (
                     trip.users && trip.users.map( user => {
-                        return <p>{user} <button onClick={() => deleteUser( user)}>X</button></p>
+                        return <p key={trip.users.indexOf(user)}>{user} <button onClick={() => deleteUser( user)}>X</button></p>
                     }) 
                 ) : (
                     <h5>{badrequest}</h5>
                  )}
     
-                {/* {trip.users.map( user => {
-                        return <p key={Date.now()}>{user} <button onClick={() => deleteUser(user)}>X</button></p>
-                    })} */}
-                
-                {/* </ul> */}
+
         </StyledDiv>
         <StyledDiv>
             <StyledForm onSubmit={submitPlaces}>
-                <label>Places</label>
-                <input 
+                <Label>Places</Label>
+                <StyledInput
                     type="text"
                     value={places.suggestion}
                     name="suggestion"
                     placeholder="Where will you go?"
                     onChange={(e) => handlePlaces(e)}
                 />
-                <button>+</button>
+                <StyledButton>+</StyledButton>
             </StyledForm>
-            <StyledButton>Show places to go</StyledButton>
         </StyledDiv>
         <StyledDiv>
             <StyledForm onSubmit={submitToDos}>
-                <label>Todos</label>
-                <input 
+                <Label>Todos</Label>
+                <StyledInput
                     type="text"
                     value={toDos.suggestion}
                     name="suggestion"
                     placeholder="Where will you go?"
                     onChange={(e) => handleToDos(e)}
                 />
-                <button>+</button>
+                <StyledButton>+</StyledButton>
             </StyledForm>
  
         </StyledDiv>
@@ -151,28 +145,28 @@ const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPl
         <div>
             <h3>Leave a message for your group</h3>
             <StyledForm onSubmit={submitMessages}>
-                <label>Topic</label>
-                <input 
+                <Label>Topic</Label>
+                <StyledInput
                     name="topic"
                     value={message.title}
                     placeholder="title"
                     onChange={handleMessages}
                 />
-                <label>Your name</label>
-                <input 
+                <Label>Your name</Label>
+                <StyledInput
                     name="username"
                     value={message.username}
                     placeholder="username"
                     onChange={handleMessages}
                 />
-                <label>Message</label>
-                <input 
+                <Label>Message</Label>
+                <StyledInput
                     name="message"
                     onChange={handleMessages}
                     value={message.message}
                     placeholder="message goes here"
                 />
-                <button>+</button>
+                <StyledButton>+</StyledButton>
             </StyledForm>
         </div>
        </div>
@@ -242,7 +236,12 @@ color: #fff;
 cursor: pointer;
 font-weight:bold;
 font-size:14px;
+text-align: center;
 border-radius:50%;
+margin: 0 auto;
+margin-top: 10px;
+width: 30px;
+height: 30px;
 &:hover{
   background:skyblue
 }

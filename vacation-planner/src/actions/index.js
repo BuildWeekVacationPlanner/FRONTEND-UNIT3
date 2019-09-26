@@ -95,7 +95,6 @@ export const deleteUserFromTrip = (name, id) => dispatch => {
             console.log("deleted", res);
             console.log("name.username", name.username);
             dispatch({type: DELETE_USER_SUCCESS, payload: name.username})
-            // findTrip(id);
         })
         .catch(err => {
             dispatch({type: DELETE_USER_FAILURE, payload: `${err}`})

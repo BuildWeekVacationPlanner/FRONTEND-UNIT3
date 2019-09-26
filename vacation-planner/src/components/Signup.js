@@ -15,7 +15,6 @@ const Signup = props => {
 
   const submitInfo = (event, creds) => {
     event.preventDefault();
-    console.log(newUser);
     axios.post("https://bw-vacation-planner.herokuapp.com/api/auth/register", creds)
         .then(res => {
             props.history.push("/");
@@ -23,8 +22,9 @@ const Signup = props => {
         .catch(err => console.log(err));
       }
 
-  const handleNewUser = event => {
-    setNewUser({ ...newUser, [event.target.name]: event.target.value });
+  const handleNewUser = e => {
+    const {name, value} = e.target;
+    setNewUser({ ...newUser, [name]: value });
   };
 
 

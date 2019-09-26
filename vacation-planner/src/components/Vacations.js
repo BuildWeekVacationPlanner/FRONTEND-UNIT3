@@ -83,7 +83,6 @@ const Vacations = ({ vacations, getTrips, addNewTrip, history }) => {
 }
 
 const mapStateToProps = state => {
-    console.log("mstp", state.vacations);
     return {
         vacations: state.vacations
     }
