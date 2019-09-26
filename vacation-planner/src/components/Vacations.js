@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import Styled from "styled-components";
 import VacationListCard from "./VacationListCard";
 import { getTrips, addNewTrip } from "../actions/index";
+import Nav from "./Nav";
 
 
-const Vacations = ({ vacations, getTrips, addNewTrip }) => {
+const Vacations = ({ vacations, getTrips, addNewTrip, history }) => {
 
     const [ newTrip, setNewTrip ] = useState({title: "", location: "", dates: "", description: ""});
 
@@ -33,6 +34,7 @@ const Vacations = ({ vacations, getTrips, addNewTrip }) => {
 
     return (
         <div>
+            <Nav history={history}/>
             <h2>My Trips</h2>
             <div>
                 <StyledForm onSubmit={e => handleSubmit(e, newTrip)}>

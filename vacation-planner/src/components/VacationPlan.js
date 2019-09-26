@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { findTrip, addUserToTrip, addPlace, addComment, deleteUserFromTrip, getPlaceSuggestions } from "../actions/index"; 
 import Styled from "styled-components";
+import Nav from "./Nav";
 
 
-const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badrequest, addComment, addUserToTrip, getPlaceSuggestions}) => {
+const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPlace, badrequest, addComment, addUserToTrip, getPlaceSuggestions}) => {
     let [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
     let [ toDos, setToDos ] = useState({suggestion: ""});
@@ -85,7 +86,10 @@ const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badr
     }, [])
     
     return (
+        <>
+        <Nav history={history}/>
         <div>
+        
         <h2>{trip.title}</h2>
 
           <StyledDiv>
@@ -172,6 +176,7 @@ const VacationPlan = ({trip, match, findTrip, deleteUserFromTrip, addPlace, badr
             </StyledForm>
         </div>
        </div>
+       </>
     );
 }
 

@@ -11,7 +11,7 @@ import Vacations from "./components/Vacations";
 function App() {
   return (
     <div className="App">
-      <h1>Vacation Planner App</h1>
+      
       <Route exact path="/" component={Login} />
       <Route exact path="/signup" component={Signup} />
       <PrivateRoute exact path="/vacation" component={Vacations}/>

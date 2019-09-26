@@ -31,7 +31,7 @@ const Signup = props => {
 
     return (
         <div>
-            
+            <h1>Vacation Planner App</h1>
             <StyledForm onSubmit={(e) => submitInfo(e, newUser)}>
                 <StyledH3>Sign up!</StyledH3>
                     <Label>username</Label>
@@ -89,7 +89,7 @@ margin: 0 auto;
 font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
   Helvetica, Arial, "Lucida Grande", sans-serif;
 font-weight: 400;
-font-size: 14px;
+height: 30px;
 color: #9d9e9e;
 text-shadow: 1px 1px 0 rgba(256, 256, 256, 1);
 background: #fff;

@@ -27,6 +27,7 @@ const Login = props => {
 
     return (
         <div>
+            <h1>Vacation Planner App</h1>
         <h2>Login page</h2>
         <StyledForm onSubmit={(e) => submitReturningUser(e, returningUser)}>
             <StyledH3>Sign in here.</StyledH3>
