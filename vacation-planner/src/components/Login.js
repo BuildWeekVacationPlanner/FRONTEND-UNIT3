@@ -1,5 +1,4 @@
-
-import React, { useState} from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import Styled from "styled-components";
 import axios from "axios";
@@ -7,55 +6,60 @@ import { Link } from "react-router-dom";
 
 const Login = props => {
 
-    const [ returningUser, setReturningUser ] = useState({ username: "", password: ""});
+  const [returningUser, setReturningUser] = useState({
+    username: "",
+    password: ""
+  });
 
-    const handleReturningUser = e => {
-        const { name, value } = e.target;
-        setReturningUser({...returningUser, [name]: value})
-    }
+  const handleReturningUser = e => {
+    setReturningUser({ ...returningUser, [e.target.name]: e.target.value });
+  };
 
-    const submitReturningUser = (e, creds) => {
-        e.preventDefault();
-        axios.post("https://bw-vacation-planner.herokuapp.com/api/auth/login", creds)
-            .then(res => {
-                props.history.push("/vacation");
-                localStorage.setItem("token", res.data.token);
-            })
-            .catch(err => console.log(err));
-    }
+  const submitReturningUser = (e, creds) => {
+    e.preventDefault();
+    axios
+      .post("https://bw-vacation-planner.herokuapp.com/api/auth/login", creds)
+      .then(res => {
+        console.log("It worked!");
+        props.history.push("/vacation");
+        localStorage.setItem("token", res.data.token);
+        console.log(res.data.token);
+      })
+      .catch(err => console.log(err));
+  };
 
-    return (
-        <div>
-            <h1>Vacation Planner App</h1>
-        <h2>Login page</h2>
-        <StyledForm onSubmit={(e) => submitReturningUser(e, returningUser)}>
-            <StyledH3>Sign in here.</StyledH3>
-            <Label>Username</Label>
-            <StyledInput
-                name="username"
-                value={returningUser.username}
-                onChange={handleReturningUser}
-            />
-            <Label>password</Label>
-            <StyledInput
-                name="password"
-                value={returningUser.password}
-                onChange={handleReturningUser}
-            />
-            <StyledButton>Log in</StyledButton>
-        </StyledForm>
-        <StyledParagraph>No account? No worries! Sign up <Link to="/signup">here</Link>.</StyledParagraph>
-        </div>
-    );
-}
+  return (
+    <div>
+      <h2>Login page</h2>
+      <StyledForm onSubmit={e => submitReturningUser(e, returningUser)}>
+        <StyledH3>Sign in here.</StyledH3>
+        <Label>Username</Label>
+        <StyledInput
+          name="username"
+          value={returningUser.username}
+          onChange={handleReturningUser}
+        />
+        <Label>password</Label>
+        <StyledInput
+          name="password"
+          value={returningUser.password}
+          onChange={handleReturningUser}
+        />
+        <StyledButton>Log in</StyledButton>
+        <StyledParagraph>
+          No account? No worries! Sign up <Link to="/signup">here</Link>.
+        </StyledParagraph>
+      </StyledForm>
+    </div>
+  );
+};
+
 
 export default Login;
 
-
-
 const Label = Styled.label`
     text-align: center;
-`
+`;
 
 const StyledInput = Styled.input`
 width: 188px;
@@ -117,6 +121,3 @@ const StyledForm = Styled.form`
   flex-direction: column;
   justify-content: center;
 `;
-
-
-
