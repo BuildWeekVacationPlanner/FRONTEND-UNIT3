@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const Login = props => {
 
+<<<<<<< HEAD
   const [returningUser, setReturningUser] = useState({
     username: "",
     password: ""
@@ -28,6 +29,26 @@ const Login = props => {
       .catch(err => console.log(err));
   };
 
+=======
+    const [ returningUser, setReturningUser ] = useState({ username: "", password: ""});
+
+    const handleReturningUser = e => {
+        const { name, value } = e.target;
+        setReturningUser({...returningUser, [name]: value})
+    }
+
+    const submitReturningUser = (e, creds) => {
+        e.preventDefault();
+        axios.post("https://bw-vacation-planner.herokuapp.com/api/auth/login", creds)
+            .then(res => {
+                props.history.push("/vacation");
+                localStorage.setItem("token", res.data.token);
+            })
+            .catch(err => console.log(err));
+    }
+
+    
+>>>>>>> c9003b49d92e27cc9f2f35b71bb896f659236c53
   return (
     <div>
       <h2>Login page</h2>
