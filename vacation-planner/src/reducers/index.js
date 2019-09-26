@@ -138,8 +138,10 @@ export const reducer = (state=initialState, action) => {
         case DELETE_USER_SUCCESS:
             return {
                 ...state,
-                mytrip: {...state.mytrip,
-                    users: [...state.mytrip.users, action.payload]}
+                mytrip: {
+                    ...state.mytrip,
+                    users: state.mytrip.users.filter(user => user !== action.payload)
+                }
             }
         case DELETE_USER_FAILURE:
             return {

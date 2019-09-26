@@ -93,8 +93,9 @@ export const deleteUserFromTrip = (name, id) => dispatch => {
     axiosWithAuth().delete(`/vacations/${id}/deleteuser`, {data: name})
         .then(res => {
             console.log("deleted", res);
-            dispatch({type: DELETE_USER_SUCCESS, payload: res.data})
-            findTrip(id);
+            console.log("name.username", name.username);
+            dispatch({type: DELETE_USER_SUCCESS, payload: name.username})
+            // findTrip(id);
         })
         .catch(err => {
             dispatch({type: DELETE_USER_FAILURE, payload: `${err}`})

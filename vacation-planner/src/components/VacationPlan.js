@@ -6,7 +6,7 @@ import Nav from "./Nav";
 
 
 const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPlace, badrequest, addComment, addUserToTrip, getPlaceSuggestions}) => {
-    let [ friends, setFriends ] = useState({username: ""});
+    const [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
     let [ toDos, setToDos ] = useState({suggestion: ""});
     let [ message, setMessage ] = useState({ username: "", topic: "", message: ""});
@@ -19,21 +19,20 @@ const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPl
         findTrip(id);
     }, []);
 
-    // useEffect(() => {
-    //     getPlaceSuggestions(id);
-    // }, [])
+
    
  
     //friends and family handlers
 
     const handleFriends = e => {
+        e.preventDefault();
         setFriends({username: e.target.value})
     }
 
     const submitFriends = e => {
         e.preventDefault();
-        console.log("submit", friends);
         addUserToTrip(friends, id);
+        setFriends({username: ""})
     }
 
     //places handlers
@@ -74,9 +73,9 @@ const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPl
     
     }
 
-    const deleteUser = (user, e) => {
-        e.preventDefault();
-        console.log(user, id);
+    const deleteUser = (user) => {
+        // e.preventDefault();
+        console.log("from delete user function", user, id);
        deleteUserFromTrip({"username": user}, id);
  
     }
@@ -95,29 +94,30 @@ const VacationPlan = ({trip, match, history, findTrip, deleteUserFromTrip, addPl
           <StyledDiv>
             <h3>Add friends and family to your trip</h3>
             <StyledForm onSubmit={submitFriends}>
-                <input 
+                <StyledInput
+                    type="text"
                     value={friends.username} 
                     name="username" 
                     placeholder="add friends and family" 
-                    onChange={(e) => handleFriends(e)}/>
+                    onChange={handleFriends}/>
                 <button>+</button>
 
             </StyledForm>
                 <h4>Friends</h4>
-                <ul>
+                {/* <ul> */}
                 {!badrequest ? (
                     trip.users && trip.users.map( user => {
-                        return <li key={Date.now()}>{user} <button onClick={e => deleteUser(user, e)}>X</button></li>
+                        return <p>{user} <button onClick={() => deleteUser( user)}>X</button></p>
                     }) 
                 ) : (
                     <h5>{badrequest}</h5>
                  )}
-{/*                 
-                {trip.users.map( user => {
-                        return <li key={Date.now()}>{user} <button onClick=>X</button></li>
+    
+                {/* {trip.users.map( user => {
+                        return <p key={Date.now()}>{user} <button onClick={() => deleteUser(user)}>X</button></p>
                     })} */}
                 
-                </ul>
+                {/* </ul> */}
         </StyledDiv>
         <StyledDiv>
             <StyledForm onSubmit={submitPlaces}>
