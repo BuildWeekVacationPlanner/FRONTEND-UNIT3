@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Styled from "styled-components";
 import VacationListCard from "./VacationListCard";
-import { getTrips, addNewTrip } from "../actions/index";
+import { getTrips, addNewTrip, deleteTrip } from "../actions/index";
 import Nav from "./Nav";
 
 
-const Vacations = ({ vacations, getTrips, addNewTrip, history }) => {
+const Vacations = ({ vacations, getTrips, deleteTrip, addNewTrip, history }) => {
 
     const [ newTrip, setNewTrip ] = useState({title: "", location: "", dates: "", description: ""});
 
@@ -76,7 +76,7 @@ const Vacations = ({ vacations, getTrips, addNewTrip, history }) => {
                 </StyledForm>
             </div>
             <div>
-                {vacations.map(vacation => <VacationListCard key={vacation.vacation_id} vacation={vacation}/>)}
+                {vacations.map(vacation => <VacationListCard key={vacation.vacation_id} deleteTrip={deleteTrip} vacation={vacation}/>)}
             </div>
         </div>
     );
@@ -87,7 +87,7 @@ const mapStateToProps = state => {
         vacations: state.vacations
     }
 }
-export default connect(mapStateToProps, {getTrips, addNewTrip})(Vacations);
+export default connect(mapStateToProps, {getTrips, deleteTrip, addNewTrip})(Vacations);
 
 
 const StyledForm = Styled.form`

@@ -41,7 +41,16 @@ export const addNewTrip = creds => dispatch => {
         });
 
 }
+/************delete trip********/
+export const DELETE_TRIP_START = "DELETE_TRIP_START";
+export const DELETE_TRIP_SUCCESS = "DELETE_TRIP_SUCCESS";
+export const DELETE_TRIP_FAILURE = "DELETE_TRIP_FAILURE";
 
+export const deleteTrip = (id) => dispatch => {
+    axiosWithAuth().delete(`/vacations/${id}/delete`, id)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+}
 /******get trip by id**********/
 
 export const FIND_TRIP_BY_ID_START ="FIND_TRIP_BY_ID_START";
@@ -149,8 +158,8 @@ export const DELETE_PLACE_START = "DELETE_PLACE_START";
 export const DELETE_PLACE_SUCCESS = "DELETE_PLACE_SUCCESS";
 export const DELETE_PLACE_FAILURE = "DELETE_PLACE_FAILURE";
 
-export const deletePlace = (id) => dispatch => {
-    axiosWithAuth().delete(``)
+export const deletePlace = (id, place) => dispatch => {
+    axiosWithAuth().delete(`/vacations/${id}/suggestions/:id/delete`, {data: place})
         .then(res => console.log(res))
         .catch(err => console.log(err))
 }
@@ -160,9 +169,12 @@ export const ADD_TODOS_START = "ADD_TODOS_START";
 export const ADD_TODOS_SUCCESS = "ADD_TODOS_SUCCESS";
 export const ADD_TODOS_FAILURE = "ADD_TODOS_FAILURE";
 
-export const addToDos = () => dispatch => {
-    axiosWithAuth.post(``)
-        .then(res => console.log(res))
+export const addToDos = (id, todo) => dispatch => {
+    // dispatch({type: ADD_TODOS_START})
+    axiosWithAuth.post(`/vacations/${id}/suggestions/add`, todo)
+        .then(res => {
+            // dispatch({type: ADD_TODOS_SUCCESS, payload: res.data});
+            console.log(res);})
         .catch(err => console.log(err))
 }
 
@@ -171,9 +183,12 @@ export const GET_TODOS_START = "GET_TODOS_START";
 export const GET_TODOS_SUCCESS = "GET_TODOS_SUCCESS";
 export const GET_TODOS_FAILURE = "GET_TODOS_FAILURE";
 
-export const getTodos = () => dispatch => {
-    axiosWithAuth().get(``)
-        .then(res => console.log(res))
+export const getTodos = (id) => dispatch => {
+    //dispatch({type: ADD_TODOS_START})
+    axiosWithAuth().get(`/vacations/${id}/suggestions/add`)
+        .then(res => {
+            // dispatch({type: GET_TODOS_SUCCESS, payload: res.data})
+            console.log(res);})
         .catch(err => console.log(err));
 }
 
@@ -183,8 +198,8 @@ export const DELETE_TODO_START = "DELETE_TODO_START";
 export const DELETE_TODO_SUCCESS = "DELETE_TODO_SUCCESS";
 export const DELETE_TODO_FAILURE = "DELETE_TODO_FAILURE";
 
-export const deleteToDo = () => {
-    axiosWithAuth.delete()
+export const deleteToDo = (id) => {
+    axiosWithAuth.delete(`/vacations/${id}/suggestions/:id/delete`)
         .then(res => console.log(res))
         .catch(err => console.log(err))
 }

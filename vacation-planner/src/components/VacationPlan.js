@@ -60,6 +60,7 @@ const VacationPlan = ({trip, match, history, getComments, findTrip, addToDos, ge
     const submitToDos = e => {
         e.preventDefault();
         console.log("successful todo submission", toDos);
+        addToDos(id, places)
     }
 
 
