@@ -42,44 +42,43 @@ const Vacations = ({ vacations, getTrips, deleteTrip, addNewTrip, history }) => 
                 <StyledForm onSubmit={e => handleSubmit(e, newTrip)}>
     
                         <StyledH3>Add new trip</StyledH3>
-                        <label>
-                            Title
+                        <Label>Title</Label>
                             <StyledInput 
                                 name="title" 
                                 value={newTrip.title} 
                                 onChange={handleChange}
                             />
-                        </label>
-                        <label>
-                            Where to?
+                        
+                        <Label>
+                            Where to?</Label>
                             <StyledInput
                                 name="location"
                                 value={newTrip.location}
                                 onChange={handleChange}
                             />
-                        </label>
-                        <label>
-                            Got dates?
+                        
+                        <Label>
+                            Got dates?</Label>
                             <StyledInput
                                 name="dates"
                                 value={newTrip.dates}
                                 onChange={handleChange}
                             />
-                        </label>
-                        <label>
+                        
+                        <Label>
                             Description
                             <StyledInput
                                 name="description"
                                 value={newTrip.description}
                                 onChange={handleChange}
                             />
-                        </label>
-                    <StyledButton>+</StyledButton>
+                        </Label>
+                    <StyledButton>Add trip</StyledButton>
                 </StyledForm>
             </div>
-            <div>
+            <Container>
                 {vacations.map(vacation => <VacationListCard key={vacation.vacation_id} deleteTrip={deleteTrip} vacation={vacation}/>)}
-            </div>
+            </Container>
         </div>
     );
 }
@@ -111,6 +110,7 @@ const StyledForm = Styled.form`
 const Label = Styled.label`
     text-align: center;
     margin-top: 10px;
+    margin-bottom: 5px;
 `
 const StyledInput = Styled.input`
 width: 188px;
@@ -122,6 +122,7 @@ font-weight: 400;
 font-size: 14px;
 color: #9d9e9e;
 text-shadow: 1px 1px 0 rgba(256, 256, 256, 1);
+margin-bottom: 10px;
 background: #fff;
 border: 1px solid #fff;
 border-radius: 5px;
@@ -141,13 +142,21 @@ color: #fff;
 cursor: pointer;
 font-weight:bold;
 font-size:14px;
-border-radius: 20px;
+border-radius: 5px;
+width: 80%;
+margin: 0 auto;
+margin-top: 10px;
+height: 50px;
 &:hover{
   background:skyblue
 }
 `;
 
-const StyledParagraph = Styled.div`
-text-align: center;
-margin-top:15px
-`;
+
+const Container = Styled.div`
+    display: flex;
+    margin: 0 auto;
+    width: 80%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+`

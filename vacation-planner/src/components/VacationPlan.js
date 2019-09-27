@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip, addUserToTrip, addPlace, addComment, deleteComment, getComments, deleteUserFromTrip, getPlaceSuggestions, getTrips, deletePlace } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment, deleteComment, getComments, deleteUserFromTrip, getPlaceSuggestions, deletePlace } from "../actions/index"; 
 import Styled from "styled-components";
 import Nav from "./Nav";
 
@@ -45,8 +45,8 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace,
 
     const submitPlaces = e => {
         e.preventDefault();
-        // addPlace(id, {"suggestion": places});
         addPlace(id, places);
+        setPlaces({suggestion: ""});
 
     }
 
@@ -57,15 +57,14 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace,
     //message handlers
     const handleMessages = e => {
         const { name, value } = e.target;
-        setMessage({...message, [name]: value});
+        setMessage({[name]: value});
     }
 
 
     const submitMessages = (e) => {
         e.preventDefault();
-        console.log("Hi!", message);
-        // addComment(id, {"comment": message});
         addComment(id, message);
+        setMessage({ comment: ""});
     
     }
 
@@ -99,10 +98,14 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace,
 
             </StyledForm>
                 <h4>Friends</h4>
-                {/* <ul> */}
                 {!badrequest ? (
                     trip.users && trip.users.map( user => {
-                        return <p key={trip.users.indexOf(user)}>{user} <button onClick={() => deleteUser( user)}>X</button></p>
+                        return (
+                            <Box>
+                                <P key={trip.users.indexOf(user)}>{user}</P> 
+                                <DB onClick={() => deleteUser( user)}>X</DB>
+                            </Box>
+                        );
                     }) 
                 ) : (
                     <h5>{badrequest}</h5>
@@ -123,8 +126,14 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace,
                 <StyledButton>+</StyledButton>
             </StyledForm>
 
-                    {suggestions && suggestions.map(item => <div key={item.id}><p>{item.suggestion}</p><button onClick={deletePlace(id, item.id)}>x</button></div>)}
- 
+                    {suggestions.length ? suggestions.map(item => {
+                    return (<Box key={item.id}>
+                                <P>{item.suggestion}</P>
+                                <DB onClick={() => deletePlace(id, item.id)}>X</DB>
+                            </Box>);}) 
+                            : 
+                    (<h5>Loading suggestions</h5>)}
+                    
         </StyledDiv>
 
         <div>
@@ -141,7 +150,12 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace,
                 <StyledButton>+</StyledButton>
             </StyledForm>
             <h3>Comments</h3>
-            {comments && comments.map(comment =><div><h5 key={comments.indexOf(comment)}>{comment.comments}</h5><button onClick={deleteComment(id, comment.id)}>X</button></div>  )}
+            {comments.length ? comments.map(comment =>
+            {return (
+                <Box>
+                    <P key={comments.indexOf(comment)}>{comment.comments}</P>
+                    <DB onClick={() => deleteComment(id, comment.id)}>X</DB>
+                </Box> ) }) : (<h5>Loading comments</h5>)}
         </div>
        </div>
        </>
@@ -149,7 +163,6 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace,
 }
 
 const mapStateToProps = state => {
-    console.log("mstp", state.mytrip);
     return {
         vacations: state.vacations,
         trip: state.mytrip,
@@ -227,4 +240,32 @@ height: 30px;
 const StyledDiv = Styled.div`
     border-bottom: 3px gray solid;
     margin-top: 30px;
+`
+const Box = Styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+const DB = Styled.button`
+background: gray;
+border-color: transparent;
+color: #fff;
+cursor: pointer;
+font-weight:bold;
+font-size:14px;
+border-radius:50%;
+margin-top: 10px;
+width: 20px;
+height: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+margin-left: 5px;
+&:hover{
+  background:skyblue
+}
+`;
+
+const P = Styled.p`
+    padding-top: 9px;
 `

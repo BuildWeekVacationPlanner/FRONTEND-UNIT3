@@ -9,6 +9,8 @@ import { DELETE_USER_START, DELETE_USER_SUCCESS, DELETE_USER_FAILURE } from "../
 import { GET_COMMENT_START, GET_COMMENT_SUCCESS, GET_COMMENT_FAILURE } from "../actions";
 import { DELETE_PLACE_START, DELETE_PLACE_SUCCESS, DELETE_PLACE_FAILURE } from "../actions"
 import { DELETE_COMMENT_START, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_FAILURE } from "../actions";
+import { DELETE_TRIP_START, DELETE_TRIP_SUCCESS, DELETE_TRIP_FAILURE } from "../actions";
+
 
 const initialState = {
     vacations: [],
@@ -61,6 +63,20 @@ export const reducer = (state=initialState, action) => {
                 isFetching: false,
                 error: action.payload
             }
+        case DELETE_TRIP_START:
+            return {
+                ...state
+            } 
+        case DELETE_TRIP_SUCCESS: 
+            return {
+                ...state,
+                vacations: []
+            }
+        case DELETE_TRIP_FAILURE:
+            return {
+                ...state,
+                err: action.payload
+            }
         case FIND_TRIP_BY_ID_START:
             return {
                 ...state,
@@ -71,7 +87,9 @@ export const reducer = (state=initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                mytrip: action.payload 
+                mytrip: {
+                    ...state.mytrip,
+                    ...action.payload} 
             } 
         case FIND_TRIP_BY_ID_FAILURE: 
             return {
@@ -114,9 +132,7 @@ export const reducer = (state=initialState, action) => {
                 ...state
             }
         case GET_PLACE_START:
-            return {
-                ...state
-            }
+            return state
         case GET_PLACE_SUCCESS: 
             return {
                 ...state,
@@ -189,6 +205,11 @@ export const reducer = (state=initialState, action) => {
             } 
         case DELETE_PLACE_SUCCESS:
             return {
+                ...state,
+                mytrip: {
+                    ...state.mytrip,
+                    suggestions: state.mytrip.suggestions.filter(item => item.id !== action.payload)
+                }
             }
         case DELETE_PLACE_FAILURE: 
             return {
@@ -201,7 +222,11 @@ export const reducer = (state=initialState, action) => {
             } 
         case DELETE_COMMENT_SUCCESS: 
             return {
-                ...state
+                ...state,
+                mytrip: {
+                    ...state.mytrip,
+                    comments: state.mytrip.comments.filter(item => item.id !== action.payload)
+                }
             }
         
         case DELETE_COMMENT_FAILURE:
