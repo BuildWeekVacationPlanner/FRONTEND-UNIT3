@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { findTrip, addUserToTrip, addPlace, addComment, deleteComment, getComments, deleteUserFromTrip, getPlaceSuggestions, getTrips } from "../actions/index"; 
+import { findTrip, addUserToTrip, addPlace, addComment, deleteComment, getComments, deleteUserFromTrip, getPlaceSuggestions, getTrips, deletePlace } from "../actions/index"; 
 import Styled from "styled-components";
 import Nav from "./Nav";
 
 
-const VacationPlan = ({trip, comments, match, suggestions, history, deleteComment, getComments, findTrip, addComment, deleteUserFromTrip, addPlace, badrequest,  addUserToTrip, getPlaceSuggestions}) => {
+const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace, deleteComment, getComments, findTrip, addComment, deleteUserFromTrip, addPlace, badrequest,  addUserToTrip, getPlaceSuggestions}) => {
     const [ friends, setFriends ] = useState({username: ""});
     let [ places, setPlaces ] = useState({suggestion: ""});
     let [ message, setMessage ] = useState({ comment: ""});
@@ -123,7 +123,7 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deleteCommen
                 <StyledButton>+</StyledButton>
             </StyledForm>
 
-                    {suggestions && suggestions.map(item => <p>Hi.</p>)}
+                    {suggestions && suggestions.map(item => <div key={item.id}><p>{item.suggestion}</p><button onClick={deletePlace(id, item.id)}>x</button></div>)}
  
         </StyledDiv>
 
@@ -160,7 +160,7 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, {findTrip, deleteComment, deleteUserFromTrip, getComments, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
+export default connect(mapStateToProps, {findTrip, deleteComment, deletePlace, deleteUserFromTrip, getComments, addUserToTrip, addComment, addPlace, getPlaceSuggestions})(VacationPlan);
 
 
 

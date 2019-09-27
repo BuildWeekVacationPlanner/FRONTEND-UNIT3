@@ -158,8 +158,8 @@ export const DELETE_PLACE_START = "DELETE_PLACE_START";
 export const DELETE_PLACE_SUCCESS = "DELETE_PLACE_SUCCESS";
 export const DELETE_PLACE_FAILURE = "DELETE_PLACE_FAILURE";
 
-export const deletePlace = (id, place) => dispatch => {
-    axiosWithAuth().delete(`/vacations/${id}/suggestions/:id/delete`, {data: place})
+export const deletePlace = (id, tripId) => dispatch => {
+    axiosWithAuth().delete(`/vacations/${id}/suggestions/${tripId}/delete`)
         .then(res => console.log(res))
         .catch(err => console.log(err))
 }
