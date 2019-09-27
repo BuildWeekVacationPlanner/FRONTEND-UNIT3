@@ -152,10 +152,6 @@ height: 50px;
 }
 `;
 
-const StyledParagraph = Styled.div`
-text-align: center;
-margin-top:15px
-`;
 
 const Container = Styled.div`
     display: flex;

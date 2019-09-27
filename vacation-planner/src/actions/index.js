@@ -49,8 +49,13 @@ export const DELETE_TRIP_FAILURE = "DELETE_TRIP_FAILURE";
 export const deleteTrip = (id) => dispatch => {
     
     axiosWithAuth().delete(`/vacations/${id}/delete`)
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        dispatch({ type: DELETE_TRIP_START})
+        .then(res => {
+            dispatch({ type: DELETE_TRIP_SUCCESS, payload: id})
+            console.log(res);})
+        .catch(err => {
+            dispatch({ type: DELETE_TRIP_SUCCESS, payload: err})
+            console.log(err);})
 }
 /******get trip by id**********/
 
@@ -63,7 +68,6 @@ export const findTrip = (id) => dispatch => {
     axiosWithAuth().get(`/vacations/${id}`)
         .then(res => {
             dispatch({ type: FIND_TRIP_BY_ID_SUCCESS, payload: res.data});
-            console.log("trip found", res.data);
         })
         .catch(err => {
             dispatch({type: FIND_TRIP_BY_ID_FAILURE, paylaod: `${err}`})
@@ -102,8 +106,6 @@ export const deleteUserFromTrip = (name, id) => dispatch => {
     dispatch({type: DELETE_USER_START})
     axiosWithAuth().delete(`/vacations/${id}/deleteuser`, {data: name})
         .then(res => {
-            console.log("deleted", res);
-            console.log("name.username", name.username);
             dispatch({type: DELETE_USER_SUCCESS, payload: name.username})
         })
         .catch(err => {
@@ -123,11 +125,9 @@ export const addPlace = (id, creds) => dispatch => {
     dispatch({ type: ADD_PLACE_START});
     axiosWithAuth().post(`/vacations/${id}/suggestions/add`, creds)
         .then(res => {
-            console.log("New place!", res.data);
             dispatch({ type: ADD_PLACE_SUCCESS, payload: res.data})
         })
         .catch(err => {
-            console.log("error adding place", err);
             dispatch({ type: ADD_PLACE_FAILURE, payload: `${err}`})
         });
 
@@ -143,12 +143,10 @@ export const GET_PLACE_SUCCESS = "GET_PLACE_SUCCESS";
 export const GET_PLACE_FAILURE = "GET_PLACE_FAILURE";
 
 export const getPlaceSuggestions = (id) => dispatch => {
-    console.log("from place actions");
     dispatch({type: GET_PLACE_START})
     axiosWithAuth().get(`/vacations/${id}/suggestions`)
         .then(res => {
             dispatch({type: GET_PLACE_SUCCESS, payload: res.data})
-            console.log("get place suggestions", res.data);
         })
         .catch(err => console.log(err));
 }
@@ -159,9 +157,10 @@ export const DELETE_PLACE_SUCCESS = "DELETE_PLACE_SUCCESS";
 export const DELETE_PLACE_FAILURE = "DELETE_PLACE_FAILURE";
 
 export const deletePlace = (id, tripId) => dispatch => {
+    dispatch({ type: DELETE_PLACE_START})
     axiosWithAuth().delete(`/vacations/${id}/suggestions/${tripId}/delete`)
         .then(res => {
-            dispatch({ type: DELETE_PLACE_SUCCESS, payload: res.id});
+            dispatch({ type: DELETE_PLACE_SUCCESS, payload: res.data.id});
             getPlaceSuggestions(id);
             })
         .catch(err => console.log(err))
@@ -179,10 +178,10 @@ export const getComments = id => dispatch => {
     axiosWithAuth().get(`/vacations/${id}/comments`)
         .then(res => {
             dispatch({ type: GET_COMMENT_SUCCESS, payload: res.data})
-            console.log("from 'getComments'", res);})
+        })
         .catch(err => {
-            dispatch({ type: GET_COMMENT_FAILURE})
-            console.log(err)})
+            dispatch({ type: GET_COMMENT_FAILURE});
+            console.log(err);})
 }
 
 /***********add comment*************/
@@ -215,7 +214,8 @@ export const deleteComment = (tripId, suggestionId) => dispatch => {
     dispatch({ type: DELETE_COMMENT_START});
     axiosWithAuth().delete(`/vacations/${tripId}/comments/${suggestionId}/delete`)
         .then(res => {
-            dispatch({ type: DELETE_COMMENT_SUCCESS, payload: res})
+            dispatch({ type: DELETE_COMMENT_SUCCESS, payload: res.data.id});
+            getComments(tripId);
             console.log("do da delete", res);})
         .catch(err => {
             dispatch({ type: DELETE_COMMENT_FAILURE})
