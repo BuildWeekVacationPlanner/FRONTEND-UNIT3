@@ -45,8 +45,8 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace,
 
     const submitPlaces = e => {
         e.preventDefault();
-        // addPlace(id, {"suggestion": places});
         addPlace(id, places);
+        setPlaces({suggestion: ""});
 
     }
 
@@ -57,7 +57,7 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace,
     //message handlers
     const handleMessages = e => {
         const { name, value } = e.target;
-        setMessage({...message, [name]: value});
+        setMessage({[name]: value});
     }
 
 
@@ -66,6 +66,7 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace,
         console.log("Hi!", message);
         // addComment(id, {"comment": message});
         addComment(id, message);
+        setMessage({ comment: ""})
     
     }
 
@@ -123,7 +124,7 @@ const VacationPlan = ({trip, comments, match, suggestions, history, deletePlace,
                 <StyledButton>+</StyledButton>
             </StyledForm>
 
-                    {suggestions && suggestions.map(item => <div key={item.id}><p>{item.suggestion}</p><button onClick={deletePlace(id, item.id)}>x</button></div>)}
+                    {suggestions.length ? suggestions.map(item => <div key={item.id}><p>{item.suggestion}</p><button onClick={() => deletePlace(id, item.id)}>x</button></div>) : (<h5>Loading suggestions</h5>)}
  
         </StyledDiv>
 

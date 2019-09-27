@@ -71,7 +71,9 @@ export const reducer = (state=initialState, action) => {
             return {
                 ...state,
                 isFetching: false,
-                mytrip: action.payload 
+                mytrip: {
+                    ...state.mytrip,
+                    ...action.payload} 
             } 
         case FIND_TRIP_BY_ID_FAILURE: 
             return {
@@ -114,9 +116,7 @@ export const reducer = (state=initialState, action) => {
                 ...state
             }
         case GET_PLACE_START:
-            return {
-                ...state
-            }
+            return state
         case GET_PLACE_SUCCESS: 
             return {
                 ...state,
@@ -189,10 +189,10 @@ export const reducer = (state=initialState, action) => {
             } 
         case DELETE_PLACE_SUCCESS:
             return {
-                ...state, 
+                ...state,
                 mytrip: {
                     ...state.mytrip,
-                    suggestions: state.mytrip.suggestions.filter(item => item !== action.payload)
+                    suggestions: state.mytrip.suggestions.filter(item => item.id !== action.payload)
                 }
             }
         case DELETE_PLACE_FAILURE: 
