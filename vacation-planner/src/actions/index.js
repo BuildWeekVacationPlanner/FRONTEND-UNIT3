@@ -159,8 +159,11 @@ export const DELETE_PLACE_SUCCESS = "DELETE_PLACE_SUCCESS";
 export const DELETE_PLACE_FAILURE = "DELETE_PLACE_FAILURE";
 
 export const deletePlace = (id, tripId) => dispatch => {
+    // dispatch({ type: DELETE_PLACE_START })
     axiosWithAuth().delete(`/vacations/${id}/suggestions/${tripId}/delete`)
-        .then(res => console.log(res))
+        .then(res => {
+            // dispatch({ type: DELETE_PLACE_SUCCESS, payload: res})
+            console.log(res);})
         .catch(err => console.log(err))
 }
 
@@ -212,9 +215,9 @@ export const deleteComment = (tripId, suggestionId) => dispatch => {
     dispatch({ type: DELETE_COMMENT_START});
     axiosWithAuth().delete(`/vacations/${tripId}/comments/${suggestionId}/delete`)
         .then(res => {
-            dispatch({ type: DELETE_COMMENT_SUCCESS})
+            dispatch({ type: DELETE_COMMENT_SUCCESS, payload: res})
             console.log("do da delete", res);})
         .catch(err => {
-            dispatch({ type: DELETE_COMMENT_SUCCESS})
+            dispatch({ type: DELETE_COMMENT_FAILURE})
             console.log(err)});
 }

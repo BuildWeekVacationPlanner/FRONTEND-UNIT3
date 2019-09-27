@@ -189,6 +189,11 @@ export const reducer = (state=initialState, action) => {
             } 
         case DELETE_PLACE_SUCCESS:
             return {
+                ...state, 
+                mytrip: {
+                    ...state.mytrip,
+                    suggestions: state.mytrip.suggestions.filter(item => item !== action.payload)
+                }
             }
         case DELETE_PLACE_FAILURE: 
             return {
@@ -201,7 +206,11 @@ export const reducer = (state=initialState, action) => {
             } 
         case DELETE_COMMENT_SUCCESS: 
             return {
-                ...state
+                ...state,
+                mytrip: {
+                    ...state.mytrip,
+                    comments: state.mytrip.comments.filter(item => item !== action.payload)
+                }
             }
         
         case DELETE_COMMENT_FAILURE:
